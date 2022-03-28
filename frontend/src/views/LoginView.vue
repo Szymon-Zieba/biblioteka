@@ -16,7 +16,7 @@ export default {
 
 <div class=container>
     <div class="loginBox">
-        <div class="loginBox-login">Logowanie</div>
+        <div class="loginBox-login">LOGOWANIE</div>
         <v-form>
             <!-- E-mail input -->
             <v-text-field
@@ -36,11 +36,14 @@ export default {
             ></v-text-field>
         </v-form>
         <v-btn
+        size="x-large"
         top="50"
         color=brown
-        >Zaloguj</v-btn>
+        to="/"
+        >ZALOGUJ</v-btn>
 
-         <div style="margin-top:70px">Nie masz konta? Zarejestruj</div>
+        <router-link style="color: black; margin-top:70px" to="/register">Nie masz konta? Zarejestruj</router-link>
+
 
     </div>
 </div>
@@ -49,6 +52,7 @@ export default {
 
 <style scoped>
 *{
+    border: 0;
     font-size:14px;
 }
 
@@ -57,6 +61,7 @@ export default {
 }
 
 .loginBox-login{
+    font-weight: bold;
     margin-bottom: 50px;
     font-size: 2rem;
 
@@ -64,10 +69,8 @@ export default {
 
 
 .loginBox{
-    border-radius: 2%;
-    border: 2px solid black;
+    height: 100%;
     width: 40rem;
-    height: 40rem;
     background-color: burlywood;
     justify-content: center;
     align-items: center;
@@ -77,12 +80,11 @@ export default {
 }
 
 .container{
-    background-image: url("../../public/img/login-biblioteka.jpg");
+    background-image: url("../../public/img/home-background-image.jpg");
     background-size: cover;
     height: 100vh;
-    align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: right;
 }
 
 </style>

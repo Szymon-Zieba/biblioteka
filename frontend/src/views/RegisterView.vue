@@ -18,7 +18,7 @@ export default {
 
 <div class=container>
     <div class="registerBox">
-        <div class="registerBox-login">Rejestracja</div>
+        <div class="registerBox-register">REJESTRACJA</div>
         <v-form>
             <!-- E-mail input -->
             <v-text-field
@@ -47,9 +47,13 @@ export default {
             ></v-text-field>
         </v-form>
         <v-btn
+        size="x-large"
         top="50"
         color=brown
-        >Zarejestruj</v-btn>
+        to="/"
+        >ZAREJESTRUJ</v-btn>
+
+        <router-link style="color: black; margin-top:70px;" to="/login">Masz juz konto? Zaloguj</router-link>
 
     </div>
 </div>
@@ -65,18 +69,16 @@ export default {
     width: 400px;
 }
 
-.registerBox-login{
+.registerBox-register{
+    font-weight: bold;
     margin-bottom: 50px;
     font-size: 2rem;
-
 }
 
 
 .registerBox{
-    border-radius: 2%;
-    border: 2px solid black;
     width: 40rem;
-    height: 40rem;
+    height: 100%;
     background-color: burlywood;
     justify-content: center;
     align-items: center;
@@ -86,12 +88,11 @@ export default {
 }
 
 .container{
-    background-image: url("../../public/img/login-biblioteka.jpg");
+    background-image: url("../../public/img/home-background-image.jpg");
     background-size: cover;
     height: 100vh;
-    align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: right;
 }
 
 </style>

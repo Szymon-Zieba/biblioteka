@@ -7,9 +7,10 @@ export default {
 </script>
 
 <template>
-<h1>Template</h1>
+  <router-view/>
 </template>
 
-<style scoped>
+<style>
+
 
 </style>

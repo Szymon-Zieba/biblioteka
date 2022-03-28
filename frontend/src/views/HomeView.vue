@@ -18,8 +18,12 @@ export default {
             <v-item-group id="header-menu">
                 <v-btn tile elevation="0" color="transparent">OFERTA</v-btn>
                 <v-btn tile elevation="0" color="transparent">KONTAKT</v-btn>
-                <v-btn tile elevation="0" color="transparent">LOGOWANIE</v-btn>
-                <v-btn tile elevation="0" color="transparent">REJESTRACJA</v-btn>
+                <v-btn to="/login" tile elevation="0" color="transparent">
+                    LOGOWANIE
+                </v-btn>
+                <v-btn to="/register" tile elevation="0" color="transparent">
+                    REJESTRACJA
+                </v-btn>
             </v-item-group>
         </header>
 
