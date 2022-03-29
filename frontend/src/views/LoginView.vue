@@ -15,6 +15,7 @@ export default {
 
 
 <div class=container>
+    <v-img class="ma-16" style="opacity: 75%" src="@/assets/img/logo-library.png"></v-img>
     <div class="loginBox">
         <div class="loginBox-login">LOGOWANIE</div>
         <v-form>

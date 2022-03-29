@@ -12,7 +12,9 @@ export default {
 
 <template>
     <header>
-        {Library.name}
+        <router-link to="/">
+            <v-img src="@/assets/img/logo-library.png" width="6.6rem" height="6rem"></v-img>
+        </router-link>
 
         <v-spacer/>
         <v-item-group id="header-menu">
@@ -31,7 +33,7 @@ export default {
 <style>
     header{
         background: rgba(0, 0, 0, 30%);
-        height: 5rem;
+        height: 6rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
