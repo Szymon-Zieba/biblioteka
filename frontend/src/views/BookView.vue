@@ -131,7 +131,7 @@ import MainHeader from '@/components/MainHeader.vue';
                   class="avatar" 
                   rounded="0"
                 >
-                  <v-img class="img" src="../../public/img/Harry_Potter_I_Więzień_Azkabanu.jpg"></v-img>
+                  <v-img class="img" src="../../public/img/books-product.jpg"></v-img>
                 </div>
               </router-link>
             </div>
