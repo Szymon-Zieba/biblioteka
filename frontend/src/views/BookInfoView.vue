@@ -57,10 +57,10 @@ import MainFooter from '@/components/MainFooter.vue';
 <template>
   <div class="all">
     <MainHeader/>
-    <v-container class="container">
+    <v-container fill-height class="container">
       <v-row 
         align="center"
-        no-gutters
+        justify="center"
       >
         <v-col class="v-col-vimg">
           <v-card
@@ -73,7 +73,8 @@ import MainFooter from '@/components/MainFooter.vue';
         </v-col>
         <v-col class="v-col-text">
           <v-card
-          class="vcard-height pa-2">
+          class="vcard-height pa-2"  
+          >
           <div class="text-h4 mb-10">
             {{book[0].title}}
           </div>
@@ -168,5 +169,8 @@ import MainFooter from '@/components/MainFooter.vue';
   }
   .btn-reserve{
     padding: 2rem;
+  }
+  .vcard-height-cos{
+    width:30rem
   }
 </style>
