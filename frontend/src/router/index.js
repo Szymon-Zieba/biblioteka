@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
+import ManagementView from "../views/ManagementView.vue";
 import HomeView from "../views/HomeView.vue";
 import BookView from "../views/BookView.vue";
 import ProfileView from "../views/ProfileView.vue";
@@ -33,6 +34,12 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: ProfileView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/management",
+    name: "management",
+    component: ManagementView,
     meta: { requiresAuth: true },
   },
 ];
