@@ -1,9 +1,18 @@
 <script>
+//import { ref } from "vue";
+
 export default {
   props: ["width"],
-  setup(props) {
+  emits: ["select-content"],
+
+  setup(props, context) {
+    const emitToParent = () => {
+      context.emit("select-content");
+    };
+
     return {
       props,
+      emitToParent,
     };
   },
 };
@@ -20,9 +29,14 @@ export default {
         <v-card-title>Profil</v-card-title>
         <v-divider></v-divider>
         <v-list nav style="background: inherit">
-          <v-list-item prepend-icon="mdi-account" title="Szczegóły konta">
+          <v-list-item
+            @click="$emit('select-content', 'details')"
+            prepend-icon="mdi-account"
+            title="Szczegóły konta"
+          >
           </v-list-item>
           <v-list-item
+            @click="$emit('select-content', 'loans')"
             prepend-icon="mdi-bookshelf"
             title="Wypożyczenia"
           ></v-list-item>
