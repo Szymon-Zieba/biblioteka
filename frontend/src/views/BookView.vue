@@ -6,7 +6,7 @@ import MainHeader from '@/components/MainHeader.vue';
       const books = ([
         {
         id: '1',
-        title: 'pierdek',
+        title: 'zgredek',
         author: 'J.K.Rowling',
         genre: 'Fantasy',
         text: 'Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ',        
@@ -104,7 +104,7 @@ import MainHeader from '@/components/MainHeader.vue';
             <div 
             >
               <router-link
-                to="/" 
+                to="/book" 
                 class="disabled-link d-flex"
               >
                 <div>
