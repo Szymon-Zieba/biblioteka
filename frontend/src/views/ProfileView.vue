@@ -12,7 +12,7 @@ export default {
       return "margin-left: " + sidebarWidth + "px !important;";
     });
 
-    let selected = ref("details");
+    const selected = ref("details");
 
     const onSelected = (value) => {
       selected.value = value;
@@ -32,13 +32,13 @@ export default {
   <main-header></main-header>
 
   <profile-sidebar
-    @child-to-parent="onSelected"
+    @select-content="onSelected"
     :width="sidebarWidth"
     class="sidebar"
   ></profile-sidebar>
   <v-container class="content" :style="style">
     <profile-details v-if="selected === 'details'"></profile-details>
-    <loans-details v-if="selected === 'loans'"></loans-details>
+    <!-- <profile-loans v-if="selected === 'loans'"></profile-loans> -->
   </v-container>
 </template>
 
