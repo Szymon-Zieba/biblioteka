@@ -3,6 +3,7 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import HomeView from "../views/HomeView.vue";
 import BookView from "../views/BookView.vue";
+import BookInfoView from "../views/BookInfoView.vue";
 import ProfileView from "../views/ProfileView.vue";
 
 const routes = [
@@ -27,6 +28,12 @@ const routes = [
     path: "/books",
     name: "books",
     component: BookView,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/book',
+    name: 'book',
+    component: BookInfoView,
     meta: { requiresAuth: false },
   },
   {

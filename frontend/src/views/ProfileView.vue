@@ -2,17 +2,27 @@
 import ProfileSidebar from "@/components/ProfileSidebar.vue";
 import MainHeader from "@/components/MainHeader.vue";
 import { computed } from "@vue/runtime-core";
+import ProfileDetails from "@/components/ProfileDetails.vue";
+import { ref } from "vue";
 export default {
-  components: { MainHeader, ProfileSidebar },
+  components: { MainHeader, ProfileSidebar, ProfileDetails },
   setup() {
     const sidebarWidth = 256;
     const style = computed(() => {
       return "margin-left: " + sidebarWidth + "px !important;";
     });
 
+    const selected = ref("details");
+
+    const onSelected = (value) => {
+      selected.value = value;
+    };
+
     return {
       sidebarWidth,
       style,
+      selected,
+      onSelected,
     };
   },
 };
@@ -21,8 +31,15 @@ export default {
 <template>
   <main-header></main-header>
 
-  <profile-sidebar :width="sidebarWidth" class="sidebar"></profile-sidebar>
-  <v-container class="content" :style="style"> </v-container>
+  <profile-sidebar
+    @select-content="onSelected"
+    :width="sidebarWidth"
+    class="sidebar"
+  ></profile-sidebar>
+  <v-container class="content" :style="style">
+    <profile-details v-if="selected === 'details'"></profile-details>
+    <!-- <profile-loans v-if="selected === 'loans'"></profile-loans> -->
+  </v-container>
 </template>
 
 <style>

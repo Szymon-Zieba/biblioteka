@@ -1,12 +1,13 @@
 <script>
 import MainHeader from '@/components/MainHeader.vue';
+import MainFooter from '@/components/MainFooter.vue';
   export default {
-  components: { MainHeader},
+  components: { MainHeader, MainFooter},
     setup(){
       const books = ([
         {
         id: '1',
-        title: 'pierdek',
+        title: 'zgredek',
         author: 'J.K.Rowling',
         genre: 'Fantasy',
         text: 'Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ',        
@@ -79,65 +80,68 @@ import MainHeader from '@/components/MainHeader.vue';
 </script>
 
 <template>
-    <div class="container">
+    <div fill-height  class="container">
       <MainHeader/>
-    <v-card class="search">
-      <v-container fluid>
-        <v-row
-          align="center"
-        >
-          <v-col cols="12">
-            <v-autocomplete
-              v-model="value"
-              :items="books"
-              label="Szukaj"
-            ></v-autocomplete>
+      <v-card class="search">
+        <v-container fluid>
+          <v-row
+            align="center"
+          >
+            <v-col cols="12">
+              <v-autocomplete
+                v-model="value"
+                :items="books"
+                label="Szukaj"
+              ></v-autocomplete>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
+      <v-container fill-height fluid>
+        <v-row justify="center" dense style="margin:2rem;">
+          <v-col v-for="book in books" :key="book.id" class="custom7cols" >
+            <v-card
+              color="#1F7087"
+            >
+              <div 
+              >
+                <router-link
+                  to="/book" 
+                  class="disabled-link d-flex"
+                >
+                  <div>
+                    <v-card-title class="text-h5 mb-6">
+                      {{book.title}}
+                    </v-card-title>
+                    
+                    <v-card-subtitle
+                      class="mb-5">
+                      {{book.author}}
+                    </v-card-subtitle>
+
+                    <v-card-subtitle>
+                      {{book.genre}}
+                    </v-card-subtitle>
+
+                    <v-card-text style="font-size: 0.8rem">
+                    {{book.text}}
+                    </v-card-text>
+
+                    
+                  </div>
+                  <div
+                    class="avatar" 
+                    rounded="0"
+                  >
+                    <v-img class="img" src="../../public/img/books-product.jpg"></v-img>
+                  </div>
+                </router-link>
+              </div>
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
-    </v-card>
-      <v-row dense style="margin:2rem;">
-        <v-col v-for="book in books" :key="book.id" class="custom7cols" >
-          <v-card
-            color="#1F7087"
-          >
-            <div 
-            >
-              <router-link
-                to="/" 
-                class="disabled-link d-flex"
-              >
-                <div>
-                  <v-card-title class="text-h5 mb-6">
-                    {{book.title}}
-                  </v-card-title>
-                  
-                  <v-card-subtitle
-                    class="mb-5">
-                     {{book.author}}
-                  </v-card-subtitle>
-
-                  <v-card-subtitle>
-                     {{book.genre}}
-                  </v-card-subtitle>
-
-                  <v-card-text style="font-size: 0.8rem">
-                  {{book.text}}
-                  </v-card-text>
-
-                  
-                </div>
-                <div
-                  class="avatar" 
-                  rounded="0"
-                >
-                  <v-img class="img" src="../../public/img/books-product.jpg"></v-img>
-                </div>
-              </router-link>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
+      <MainFooter/>
     </div>
 </template>
 
@@ -147,8 +151,7 @@ import MainHeader from '@/components/MainHeader.vue';
     background-image: url("../../public/img/books-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    margin: 0;
-    padding: 0;
+    justify-items: center;
   }
 
   .v-card{
@@ -176,9 +179,8 @@ import MainHeader from '@/components/MainHeader.vue';
     color: black !important;
   }
   .custom7cols {
-  width: 23%;
-  max-width: 23%;
-  flex-basis: 23%;
+  max-width: 24%;
+  flex-basis: 20%;
   margin: 1rem;
 }
   .search{
