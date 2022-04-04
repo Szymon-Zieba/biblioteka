@@ -8,7 +8,7 @@ export default {
 
     //const user = null;
     const user = {
-      role: "ADMIN",
+      role: "HEADADMIN",
     };
 
     const isEntitledFunction = () => {
@@ -49,6 +49,7 @@ export default {
     <v-spacer />
     <v-item-group id="header-menu">
       <v-btn
+        to="/management"
         v-if="isEntitled"
         elevation="0"
         color="transparent"

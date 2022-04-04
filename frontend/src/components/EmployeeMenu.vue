@@ -23,7 +23,7 @@ export default {
       >
         <!-- Menu pracownika -->
         <v-list
-          v-if="props.role === `employee`"
+          v-if="props.role === `EMPLOYEE`"
           nav
           style="background: inherit"
         >
@@ -39,7 +39,7 @@ export default {
         </v-list>
 
         <!-- Menu admina -->
-        <v-list v-if="props.role === `admin`" nav style="background: inherit">
+        <v-list v-if="props.role === `ADMIN`" nav style="background: inherit">
           <v-list-item prepend-icon="mdi-account-group" title="Klienci">
           </v-list-item>
           <v-list-item
@@ -57,7 +57,7 @@ export default {
 
         <!-- Menu head admina -->
         <v-list
-          v-if="props.role === `headAdmin`"
+          v-if="props.role === `HEADADMIN`"
           nav
           style="background: inherit"
         >
@@ -82,7 +82,7 @@ export default {
 
         <template v-slot:append>
           <div class="pa-2">
-            <v-btn to="/logout" block color="brown"> Wyloguj </v-btn>
+            <v-btn to="/" block color="brown"> Wyloguj </v-btn>
           </div>
         </template>
       </v-navigation-drawer>
