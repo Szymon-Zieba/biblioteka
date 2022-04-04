@@ -1,8 +1,9 @@
 <script>
 import MainHeader from '@/components/MainHeader.vue';
 import MainFooter from '@/components/MainFooter.vue';
+import ReservationPopup from '@/components/ReservationPopup.vue';
   export default {
-  components: { MainHeader,MainFooter},
+  components: { MainHeader, MainFooter, ReservationPopup},
     setup(){
       const book = 
         [{
@@ -35,7 +36,7 @@ import MainFooter from '@/components/MainFooter.vue';
         ];
      const items =  ['Wroclaw', 'Krakow', 'Warszawa', 'Cos']
      const selected = '0'  
-     
+     const showScheduleForm = false
      const isAvible = (quantity) => {
        if(quantity <= 0)
         return false  
@@ -48,7 +49,8 @@ import MainFooter from '@/components/MainFooter.vue';
       libraries,
       selected,
       isAvible,
-      items
+      items,
+      showScheduleForm
     }
   }  
 }  
@@ -104,25 +106,14 @@ import MainFooter from '@/components/MainFooter.vue';
               <v-select
                 :items="items"
                 :menu-props="{ top: true, offsetY: true }"
-                label="Wybierze Biblioteke"
+                label="Wybierz Bibliotekę"
               ></v-select>
             </v-col>
-            <v-btn
-              class="btn-reserve mt-15 mb-15"
-              color="orange"
-              style="color:black;"
-              fab
-              x-large
-              dark
-            >Rezerwacja
-            </v-btn>
-
+            <ReservationPopup v-model="showScheduleForm" />
             <div class="text-h5 mt-16">
               12 dostepnych w tej bibliotece
             </div>
           </div>
-         
-
           </v-card>
         </v-col>
       </v-row>
@@ -164,12 +155,7 @@ import MainFooter from '@/components/MainFooter.vue';
     margin: 6rem 10%;
     min-width: 8rem;
   }
-  .vcard-info{
 
-  }
-  .btn-reserve{
-    padding: 2rem;
-  }
   .vcard-height-cos{
     width:30rem
   }
