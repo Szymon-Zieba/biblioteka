@@ -3,9 +3,10 @@ import ProfileSidebar from "@/components/ProfileSidebar.vue";
 import MainHeader from "@/components/MainHeader.vue";
 import { computed } from "@vue/runtime-core";
 import ProfileDetails from "@/components/ProfileDetails.vue";
+import ProfileLoans from "@/components/ProfileLoans.vue";
 import { ref } from "vue";
 export default {
-  components: { MainHeader, ProfileSidebar, ProfileDetails },
+  components: { MainHeader, ProfileSidebar, ProfileDetails, ProfileLoans },
   setup() {
     const sidebarWidth = 256;
     const style = computed(() => {
@@ -38,7 +39,7 @@ export default {
   ></profile-sidebar>
   <v-container class="content" :style="style">
     <profile-details v-if="selected === 'details'"></profile-details>
-    <!-- <profile-loans v-if="selected === 'loans'"></profile-loans> -->
+    <profile-loans v-if="selected === 'loans'"></profile-loans>
   </v-container>
 </template>
 
