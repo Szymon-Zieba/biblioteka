@@ -13,7 +13,7 @@ export default {
 <template>
   <div id="container">
     <main-header />
-
+    <div style="width: 100%; height: 6rem"></div>
     <div id="content" class="text-center">
       <span class="text-h1 font-weight-regular"
         >WITAJ W
