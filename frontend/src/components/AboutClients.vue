@@ -131,6 +131,7 @@ import { ref, reactive, computed } from 'vue'
 <style scoped>
   .main{
     padding: 2rem;
+    max-width: 102rem;
   }
   .disabled-link{       
   text-decoration: none;
