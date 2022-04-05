@@ -2,8 +2,9 @@
 import EmployeeMenu from "@/components/EmployeeMenu.vue";
 import MainHeader from "@/components/MainHeader.vue";
 import { computed } from "@vue/runtime-core";
+import AdminBookMenegment from '@/components/AdminBookMenegment.vue';
 export default {
-  components: { MainHeader, EmployeeMenu },
+  components: { MainHeader, EmployeeMenu, AdminBookMenegment },
   setup() {
     const sidebarWidth = 256;
     const style = computed(() => {
@@ -26,7 +27,9 @@ export default {
 <template>
   <main-header></main-header>
   <EmployeeMenu :role="user.role" :width="sidebarWidth" class="sidebar" />
-  <v-container class="content" :style="style"> </v-container>
+  <v-container class="content" :style="style">
+    <admin-book-menegment> </admin-book-menegment>
+  </v-container>
 </template>
 
 <style>
