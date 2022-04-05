@@ -1,10 +1,11 @@
 <script>
 import MainHeader from '@/components/MainHeader.vue';
 import MainFooter from '@/components/MainFooter.vue';
+import { ref, reactive, computed } from 'vue';
   export default {
   components: { MainHeader, MainFooter},
     setup(){
-      const books = ([
+      const books = reactive([
         {
         id: '1',
         title: 'zgredek',
@@ -72,8 +73,17 @@ import MainFooter from '@/components/MainFooter.vue';
         
       ]);
 
+    const search = ref('')
+
+    const filteredList = computed(() => {
+      return books.filter(book => 
+        (book.title+book.genre).toLowerCase().includes(search.value.toLowerCase())
+      )
+    })
     return { 
       books,
+      filteredList,
+      search
     }
   }  
 }  
@@ -88,18 +98,18 @@ import MainFooter from '@/components/MainFooter.vue';
             align="center"
           >
             <v-col cols="12">
-              <v-autocomplete
-                v-model="value"
-                :items="books"
-                label="Szukaj"
-              ></v-autocomplete>
+              <v-text-field 
+                v-model="search"
+                label="Wpisz Tytuł lub Gatunek"
+                >
+              </v-text-field>
             </v-col>
           </v-row>
         </v-container>
       </v-card>
       <v-container fill-height fluid>
         <v-row justify="center" dense style="margin:2rem;">
-          <v-col v-for="book in books" :key="book.id" class="custom7cols" >
+          <v-col v-for="book in filteredList" :key="book" class="custom7cols" >
             <v-card
               color="#1F7087"
             >
@@ -152,6 +162,7 @@ import MainFooter from '@/components/MainFooter.vue';
     background-repeat: no-repeat;
     background-size: cover;
     justify-items: center;
+    min-height: 100vh;
   }
 
   .v-card{
