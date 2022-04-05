@@ -2,7 +2,7 @@
 import EmployeeMenu from "@/components/EmployeeMenu.vue";
 import MainHeader from "@/components/MainHeader.vue";
 import { computed } from "@vue/runtime-core";
-import AboutClients from '@/components/AboutClients.vue';
+import AboutClients from "@/components/AboutClients.vue";
 export default {
   components: { MainHeader, EmployeeMenu, AboutClients },
   setup() {
@@ -27,8 +27,14 @@ export default {
 <template>
   <main-header></main-header>
   <EmployeeMenu :role="user.role" :width="sidebarWidth" class="sidebar" />
-  <AboutClients style="position: relative; margin-left: 17rem"/>
-  <v-container class="content" :style="style"> </v-container>
+
+  <v-container
+    class="content"
+    style="margin-top: 6rem !important"
+    :style="style"
+  >
+    <AboutClients style="position: relative" />
+  </v-container>
 </template>
 
 <style>

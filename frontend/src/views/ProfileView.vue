@@ -37,7 +37,7 @@ export default {
     :width="sidebarWidth"
     class="sidebar"
   ></profile-sidebar>
-  <v-container class="content" :style="style">
+  <v-container class="content" style="margin-top: 6rem" :style="style">
     <profile-details v-if="selected === 'details'"></profile-details>
     <profile-loans v-if="selected === 'loans'"></profile-loans>
   </v-container>
