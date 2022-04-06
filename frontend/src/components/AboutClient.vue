@@ -71,7 +71,7 @@ export default {
         ul. {{user.street}}, {{user.zip}} {{user.city}} <br>
         PESEL: {{user.pesel}}
         </div>
-      </v-window-item>
+      </v-window-item> 
       <!-- LICZBA WYPOŻYCZEŃ W BIBLIOTECE -->
       <v-window-item value="loans-count">
         <div class="details"> <br>
