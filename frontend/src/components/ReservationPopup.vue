@@ -56,7 +56,7 @@
   </v-row>
 </template>
 
-<style>
+<style scoped>
  .btn-reserve{
     padding: 2rem;
   }

@@ -100,6 +100,9 @@ header {
   justify-content: space-between;
   color: white;
   padding: 0 3rem 0 3rem;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
 }
 
 #header-menu {
