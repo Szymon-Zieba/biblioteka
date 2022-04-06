@@ -111,6 +111,7 @@ export default {
     <div class="title">
         <h1> Lista książek </h1>
     </div>
+
     <v-card class="search">
         <v-container fluid>
           <v-row
@@ -126,8 +127,7 @@ export default {
           </v-row>
         </v-container>
     </v-card>
-    
-
+  
   <div class="add">
     <v-btn 
     class="button"
@@ -217,7 +217,7 @@ export default {
             <template v-slot:subtitle>
               <div class="des"><span class="font-weight-bold">{{book.genre}}</span> &mdash; {{book.text}} </div>
               <div class="trash"><v-icon>mdi-delete</v-icon></div>
-              <div class="id">{{book.id}}</div>
+              <div class="id">{{book.id}}</div> 
               <div class="author">{{book.author}}</div>
               <div style="clear:both;"></div>
             </template>
