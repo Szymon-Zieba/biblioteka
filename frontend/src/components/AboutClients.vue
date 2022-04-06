@@ -67,7 +67,7 @@ import { ref, reactive, computed } from 'vue'
       class="mb-9"
     >
     <router-link 
-      to="/"
+      to="/client"
     class="disabled-link"
     >
       <v-row
