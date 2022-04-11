@@ -67,7 +67,7 @@ import { ref, reactive, computed } from 'vue'
       class="mb-9"
     >
     <router-link 
-      to="/"
+      to="/client"
     class="disabled-link"
     >
       <v-row
@@ -131,6 +131,7 @@ import { ref, reactive, computed } from 'vue'
 <style scoped>
   .main{
     padding: 2rem;
+    max-width: 102rem;
   }
   .disabled-link{       
   text-decoration: none;

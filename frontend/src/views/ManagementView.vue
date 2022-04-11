@@ -2,7 +2,7 @@
 import EmployeeMenu from "@/components/EmployeeMenu.vue";
 import MainHeader from "@/components/MainHeader.vue";
 import { computed } from "@vue/runtime-core";
-import AboutClients from "@/components/AboutClients.vue";
+import AboutClients from '@/components/AboutClients.vue';
 export default {
   components: { MainHeader, EmployeeMenu, AboutClients },
   setup() {
@@ -33,7 +33,7 @@ export default {
     style="margin-top: 6rem !important"
     :style="style"
   >
-    <AboutClients style="position: relative" />
+    <about-clients style="position: relative" />
   </v-container>
 </template>
 
