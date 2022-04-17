@@ -16,15 +16,15 @@ public class Book {
     private String title;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private String author;
+    private Set<Author> author;
 
     private String publishmentYear;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private String publishingHouse;
+    private Set<PublishingHouse> publishingHouse;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private String category;
+    private Set<Category> category;
 
     private String description;
 
