@@ -3,6 +3,8 @@ package pl.goread.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -13,9 +15,11 @@ public class Return {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long hire_id;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Hire hire;
 
-    private Long employee_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User employee;
 
-    private Date date_return;
+    private LocalDateTime returnDate;
 }
