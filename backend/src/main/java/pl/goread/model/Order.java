@@ -16,7 +16,7 @@ public class Order {
     private String title;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Author> author;
+    private Set<Author> authors;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private PublishmentHouse publishmentHouse;
