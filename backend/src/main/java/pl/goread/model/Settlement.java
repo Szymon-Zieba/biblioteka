@@ -7,15 +7,14 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Return {
+public class Settlement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long hire_id;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Hire Hire;
 
-    private Long employee_id;
-
-    private Date date_return;
+    private Float amount;
 }
