@@ -8,6 +8,6 @@ import pl.goread.model.Settlement;
 @Repository
 public interface SettlementRepository extends JpaRepository<Settlement, Long> {
 
-    Hire findSettlementByHire(Hire hire);
+    Settlement findSettlementByHire(Hire hire);
 
 }
