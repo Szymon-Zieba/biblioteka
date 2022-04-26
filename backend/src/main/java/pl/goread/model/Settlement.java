@@ -13,7 +13,8 @@ public class Settlement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long hire_id;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Hire Hire;
 
     private Float amount;
 }
