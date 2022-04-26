@@ -3,6 +3,7 @@ package pl.goread.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -13,11 +14,14 @@ public class Hire {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long book_id;
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<Book> books;
 
-    private Long user_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
-    private Long library_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Library library;
 
-    private Date date_hire;
+    private LocalDateTime hireDate;
 }
