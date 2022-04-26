@@ -14,7 +14,7 @@ public class Settlement {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Hire Hire;
+    private Hire hire;
 
     private Float amount;
 }
