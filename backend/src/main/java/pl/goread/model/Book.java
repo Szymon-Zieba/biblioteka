@@ -20,11 +20,11 @@ public class Book {
 
     private String publishmentYear;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<PublishingHouse> publishingHouse;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PublishmentHouse publishmentHouse;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Category> category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
     private String description;
 
