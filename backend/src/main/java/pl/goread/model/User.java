@@ -2,15 +2,16 @@ package pl.goread.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -39,13 +40,18 @@ public class User implements UserDetails {
 
     private String city;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Role role;
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return Collections.singletonList(role);
     }
 
     @JsonIgnore
