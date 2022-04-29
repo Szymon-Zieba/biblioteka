@@ -1,5 +1,6 @@
 package pl.goread.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -18,6 +19,7 @@ public class Role implements GrantedAuthority {
 
     private String name;
 
+    @JsonIgnore
     @Override
     public String getAuthority() {
         return name;
