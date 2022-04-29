@@ -26,8 +26,11 @@ public class JWTUtils {
     public String generateToken(Authentication authentication){
         User userPrincipal = (User) authentication.getPrincipal();
 
-        return Jwts.builder().setSubject(userPrincipal.getUsername()).setIssuedAt(new Date())
+        return Jwts.builder()
+                .setSubject(userPrincipal.getUsername())
+                .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + JWT_EXPIRATION))
+                .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .compact();
     }
 
