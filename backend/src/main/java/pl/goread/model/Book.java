@@ -1,8 +1,10 @@
 package pl.goread.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,15 +17,15 @@ public class Book {
 
     private String title;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Author> author;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Author> author=new HashSet<>();
 
     private String publishmentYear;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private PublishmentHouse publishmentHouse;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Category category;
 
     private String description;
