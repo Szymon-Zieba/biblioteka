@@ -2,6 +2,7 @@ package pl.goread.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.goread.model.User;
 
@@ -22,5 +23,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM User where role_id!=0",
             nativeQuery = true)
     List<User> getEmployees();
+
+    @Query(value = "SELECT * FROM User where role_id!=0 && id=:id",
+            nativeQuery = true)
+    User getEmployeeById(@Param("id")Long id);
 
 }
