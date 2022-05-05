@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import pl.goread.model.User;
+import pl.goread.repository.RoleRepository;
 import pl.goread.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,6 +20,7 @@ public class UserService implements UserDetailsService {
     private static final String USER_NOT_FOUND_MSG = "Nie znaleziono takiego użytkownika";
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     public boolean emailExists(String email){
         return userRepository.existsUserByEmail(email);
@@ -42,4 +45,8 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return user;
     }
+    public User addEmployee(User user){
+        user.setRole(roleRepository.findRoleByName(user.getRole().getName()));
+        return userRepository.save(user);
+    };
 }

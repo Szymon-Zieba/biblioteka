@@ -19,12 +19,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsUserByPESEL(String PESEL);
 
-    //Przy zalozeniu, ze ROLE_USER ma id=0
-    @Query(value = "SELECT * FROM User where role_id!=0",
+    //Przy zalozeniu, ze ROLE_USER ma id=1
+    @Query(value = "SELECT * FROM User where role_id!=1",
             nativeQuery = true)
     List<User> getEmployees();
 
-    @Query(value = "SELECT * FROM User where role_id!=0 && id=:id",
+    @Query(value = "SELECT * FROM User where role_id!=1 && id=:id",
             nativeQuery = true)
     User getEmployeeById(@Param("id")Long id);
 
