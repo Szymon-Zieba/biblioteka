@@ -41,8 +41,14 @@ public class BookService {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(BOOK_NOT_FOUND_MSG));
     }
+
+    public List<Book> getBooksBySearch(String input){
+        return bookRepository.findByTitleContains(input);
+    }
+
     public Book addBook(Book book){
         ArrayList<Author> authorList = new ArrayList<>();
+
 
         for(int i = 0; i < book.getAuthor().size(); i++) {
             Author a = new ArrayList<Author>(book.getAuthor()).get(i);
