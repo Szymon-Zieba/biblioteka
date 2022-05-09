@@ -17,7 +17,7 @@ public class GiveBackService {
 
     private final GiveBackRepository GiveBackRepository;
 
-    public List<GiveBack> getGivesBackByHire(Hire hire){
+    public List<GiveBack> getGiveBacksByHire(Hire hire){
         return GiveBackRepository.getGivesBackByHire(hire);
     }
 
@@ -25,4 +25,7 @@ public class GiveBackService {
         return GiveBackRepository.getGiveBackByEmployee(user);
     }
 
+    public GiveBack addGiveBack(GiveBack giveBack){
+        return GiveBackRepository.save(giveBack);
+    };
 }
