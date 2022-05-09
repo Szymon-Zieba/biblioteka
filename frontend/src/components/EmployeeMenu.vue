@@ -3,9 +3,14 @@ export default {
   name: "EmployeeMenu",
   props: ["role"],
 
-  setup(props) {
+  setup(props, context) {
+    const emitToParent = () => {
+      context.emit("select-content");
+    };
+
     console.log(props.role);
     return {
+      emitToParent,
       props,
     };
   },
@@ -27,30 +32,45 @@ export default {
           nav
           style="background: inherit"
         >
-          <v-list-item prepend-icon="mdi-account-group" title="Klienci">
+          <v-list-item
+            prepend-icon="mdi-account-group"
+            title="Klienci"
+            @click="$emit('select-content', 'clients')"
+          >
           </v-list-item>
-          <v-list-item prepend-icon="mdi-basket" title="Wypożyczenia">
+          <v-list-item
+            prepend-icon="mdi-basket"
+            title="Wypożyczenia"
+            @click="$emit('select-content', 'hires')"
+          >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-book-search"
             title="Rejestr zapotrzebowania"
+            @click="$emit('select-content', 'demands')"
           >
           </v-list-item>
         </v-list>
 
         <!-- Menu admina -->
         <v-list v-if="props.role === `ADMIN`" nav style="background: inherit">
-          <v-list-item prepend-icon="mdi-account-group" title="Klienci">
+          <v-list-item
+            prepend-icon="mdi-account-group"
+            title="Klienci"
+            @click="$emit('select-content', 'clients')"
+          >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-account-multiple"
             title="Pracownicy"
+            @click="$emit('select-content', 'employees')"
           ></v-list-item>
           <v-list-item prepend-icon="mdi-basket" title="Wypożyczenia">
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-book-search"
             title="Rejestr zapotrzebowania"
+            @click="$emit('select-content', 'demands')"
           >
           </v-list-item>
         </v-list>
@@ -61,22 +81,33 @@ export default {
           nav
           style="background: inherit"
         >
-          <v-list-item prepend-icon="mdi-account-group" title="Klienci">
+          <v-list-item
+            prepend-icon="mdi-account-group"
+            title="Klienci"
+            @click="$emit('select-content', 'clients')"
+          >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-account-multiple"
             title="Pracownicy"
+            @click="$emit('select-content', 'employees')"
           ></v-list-item>
-          <v-list-item prepend-icon="mdi-basket" title="Wypożyczenia">
+          <v-list-item
+            prepend-icon="mdi-basket"
+            title="Wypożyczenia"
+            @click="$emit('select-content', 'hires')"
+          >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-book-search"
             title="Rejestr zapotrzebowania"
+            @click="$emit('select-content', 'demands')"
           >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-bookshelf"
             title="Biblioteki"
+            @click="$emit('select-content', 'libraries')"
           ></v-list-item>
         </v-list>
 
