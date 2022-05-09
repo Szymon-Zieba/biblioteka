@@ -6,6 +6,7 @@ import { ref } from "vue";
 import AboutClients from "@/components/AboutClients.vue";
 import BookDemandManagement from "@/components/BookDemandManagement.vue";
 import EmployeeManagement from "@/components/EmployeeManagement.vue";
+import LibraryManagment from '@/components/LibraryManagment.vue';
 
 export default {
   components: {
@@ -14,6 +15,7 @@ export default {
     AboutClients,
     BookDemandManagement,
     EmployeeManagement,
+    LibraryManagment,
   },
   setup() {
     const sidebarWidth = 256;
@@ -63,6 +65,10 @@ export default {
     />
     <EmployeeManagement
       v-if="selected === `employees`"
+      style="position: relative"
+    />
+    <LibraryManagment
+      v-if="selected === `libraries`"
       style="position: relative"
     />
   </v-container>
