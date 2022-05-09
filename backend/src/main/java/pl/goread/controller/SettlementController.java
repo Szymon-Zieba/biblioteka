@@ -9,6 +9,8 @@ import pl.goread.repository.SettlementRepository;
 import pl.goread.service.GiveBackService;
 import pl.goread.service.SettlementService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
@@ -24,5 +26,11 @@ public class SettlementController {
     @PostMapping("/settlement")
     public Settlement addSettlement(@RequestBody Settlement settlement){
         return settlementService.addSettlement(settlement);
+    };
+
+
+    @GetMapping("/settlements/user/{id}")
+    public List<Settlement> getSettlementsByUserId(@PathVariable Long id){
+        return settlementRepository.getSettlementsByUserId(id);
     };
 }
