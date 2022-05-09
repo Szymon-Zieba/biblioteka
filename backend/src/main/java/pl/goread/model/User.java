@@ -1,13 +1,18 @@
 package pl.goread.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
-public class User {
+@NoArgsConstructor
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +21,7 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @JsonIgnore
     private String password;
 
     @Column(unique = true)
@@ -34,7 +40,47 @@ public class User {
 
     private String city;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Role role;
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(role);
+    }
+
+    @JsonIgnore
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
