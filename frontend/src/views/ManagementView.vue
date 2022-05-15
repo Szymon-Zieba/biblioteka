@@ -60,6 +60,7 @@ export default {
   >
     <about-clients v-if="selected === `clients`" style="position: relative" />
     <BookDemandManagement
+      :role="user.role"
       v-if="selected === `demands`"
       style="position: relative"
     />
