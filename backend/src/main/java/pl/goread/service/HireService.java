@@ -16,27 +16,32 @@ public class HireService {
 
     private final HireRepository HireRepository;
 
-    public List<Hire> getHiresByLibrary(Library library){
+    public List<Hire> getHiresByLibrary(Library library) {
         return HireRepository.getHiresByLibrary(library);
     }
 
-    public List<Hire> getHiresByUser(User user){
+    public List<Hire> getHiresByUser(User user) {
         return HireRepository.getHiresByUser(user);
     }
 
     public final UserService userService;
 
-    public Hire getHireById(Long id){
+    public final LibraryService libraryService;
+
+    public Hire getHireById(Long id) {
         return HireRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND_MSG));
     }
 
-    public Hire addHire(Hire hire){
+    public Hire addHire(Hire hire) {
         return HireRepository.save(hire);
     }
 
-
     public List<Hire> getHiresByUserId(Long id) {
         return HireRepository.getHiresByUser(userService.getUserById(id));
+    }
+
+    public List<Hire> getHiresByLibraryId(Long id) {
+        return HireRepository.getHiresByLibrary(libraryService.getLibraryById(id));
     }
 }

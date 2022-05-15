@@ -29,5 +29,10 @@ public class HireController {
         return hireService.getHiresByUserId(id);
     }
 
+    @GetMapping("/hires/library/{id}")
+    public List<Hire> getHiresByLibraryId(@PathVariable Long id) {
+        return hireService.getHiresByLibraryId(id);
+    }
+
 
 }
