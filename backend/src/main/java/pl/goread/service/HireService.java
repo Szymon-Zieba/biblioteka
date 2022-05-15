@@ -1,15 +1,11 @@
 package pl.goread.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.goread.model.*;
 import pl.goread.repository.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -20,18 +16,6 @@ public class HireService {
 
     private final HireRepository HireRepository;
 
-
-    private final RoleRepository roleRepository;
-
-    private final UserRepository userRepository;
-
-    private final LibraryRepository libraryRepository;
-
-    private final BookRepository bookRepository;
-
-    private final Book book;
-    private final Library library;
-
     public List<Hire> getHiresByLibrary(Library library){
         return HireRepository.getHiresByLibrary(library);
     }
@@ -39,6 +23,8 @@ public class HireService {
     public List<Hire> getHiresByUser(User user){
         return HireRepository.getHiresByUser(user);
     }
+
+    public final UserService userService;
 
     public Hire getHireById(Long id){
         return HireRepository.findById(id)
@@ -50,4 +36,7 @@ public class HireService {
     }
 
 
+    public List<Hire> getHiresByUserId(Long id) {
+        return HireRepository.getHiresByUser(userService.getUserById(id));
+    }
 }

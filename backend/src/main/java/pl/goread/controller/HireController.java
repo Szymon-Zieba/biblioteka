@@ -1,21 +1,21 @@
 package pl.goread.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.goread.model.Book;
 import pl.goread.model.Hire;
-import pl.goread.model.User;
 import pl.goread.repository.HireRepository;
 import pl.goread.service.HireService;
 
+import java.util.List;
+
+@RestController
+@CrossOrigin
+@RequiredArgsConstructor
 public class HireController {
-
-    private HireService hireService;
-
-    private HireRepository hireRepository;
-
+    private final HireService hireService;
 
     @GetMapping("/hire/{id}")
-    public Hire getHire(@PathVariable Long id){
+    public Hire getHire(@PathVariable Long id) {
         return hireService.getHireById(id);
     }
 
@@ -23,5 +23,11 @@ public class HireController {
     public Hire postHire(@RequestBody Hire hire) {
         return hireService.addHire(hire);
     }
+
+    @GetMapping("/hires/user/{id}")
+    public List<Hire> getHiresByUserId(@PathVariable Long id) {
+        return hireService.getHiresByUserId(id);
+    }
+
 
 }

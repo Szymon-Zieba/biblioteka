@@ -7,11 +7,15 @@ import pl.goread.model.Library;
 import pl.goread.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface HireRepository extends JpaRepository<Hire, Long> {
 
+
     List<Hire> getHiresByLibrary(Library library);
 
     List<Hire> getHiresByUser(User user);
+
+
 }
