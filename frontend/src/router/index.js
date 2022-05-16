@@ -6,6 +6,7 @@ import HomeView from "../views/HomeView.vue";
 import BookView from "../views/BookView.vue";
 import BookInfoView from "../views/BookInfoView.vue";
 import ProfileView from "../views/ProfileView.vue";
+import ContactFormView from "../views/ContactFormView";
 
 const routes = [
   {
@@ -48,6 +49,12 @@ const routes = [
     name: "management",
     component: ManagementView,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/contact",
+    name: "contact",
+    component: ContactFormView,
+    meta: { requiresAuth: false },
   },
 ];
 
