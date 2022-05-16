@@ -91,49 +91,52 @@ export default {
 </script>
 
 <template>
-  <div fill-height class="container">
-    <MainHeader style="margin-top: -6rem !important" />
-    <v-card class="search">
-      <v-container fluid>
-        <v-row align="center">
-          <v-col cols="12">
-            <v-text-field v-model="search" label="Wpisz Tytuł lub Gatunek">
-            </v-text-field>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card>
-    <v-container fill-height fluid>
-      <v-row justify="center" dense style="margin: 2rem">
-        <v-col v-for="book in filteredList" :key="book" class="custom7cols">
-          <v-card color="#1F7087">
-            <div>
-              <router-link to="/book" class="disabled-link d-flex">
-                <div>
-                  <v-card-title class="text-h5 mb-6">
-                    {{ book.title }}
-                  </v-card-title>
+  <div style="padding-top: 6rem !important" fill-height class="container">
+    <MainHeader style="margin-top: -6rem !important; background: #795548" />
+    <v-container>
+      <v-text-field
+        variant="outlined"
+        prepend-icon="mdi-magnify"
+        v-model="search"
+        label="Tytuł/Gatunek"
+      >
+      </v-text-field>
 
-                  <v-card-subtitle class="mb-5">
-                    {{ book.author }}
-                  </v-card-subtitle>
-
-                  <v-card-subtitle>
-                    {{ book.genre }}
-                  </v-card-subtitle>
-
-                  <v-card-text style="font-size: 0.8rem">
-                    {{ book.text }}
-                  </v-card-text>
+      <v-row cols="12">
+        <v-col
+          v-for="book in filteredList"
+          :key="book"
+          xl="2"
+          lg="3"
+          md="4"
+          sm="4"
+          xs="6"
+        >
+          <v-card elevation="1" class="book-card">
+            <router-link to="/book">
+              <v-img
+                class="book-img"
+                cover
+                src="../../public/img/harry-potter-kamien-filozoficzny.jpg"
+              >
+                <div class="book-img-overlay">
+                  <span class="book-img-overlay-button">Szczegóły</span>
                 </div>
-                <div class="avatar" rounded="0">
-                  <v-img
-                    class="img"
-                    src="../../public/img/books-product.jpg"
-                  ></v-img>
-                </div>
-              </router-link>
-            </div>
+              </v-img>
+            </router-link>
+            <v-card-title> {{ book.title }} </v-card-title>
+            <v-card-subtitle class="text-subtitle-1">
+              {{ book.author }}
+            </v-card-subtitle>
+            <v-card-subtitle class="text-subtitle-2 mt-2">
+              Gatunek: {{ book.genre }}
+            </v-card-subtitle>
+            <v-card-text class="text-caption"> {{ book.text }} </v-card-text>
+            <v-card-actions style="justify-content: end">
+              <v-btn to="/book" size="small" append-icon="mdi-chevron-right"
+                >Szczegóły</v-btn
+              >
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -143,45 +146,26 @@ export default {
 </template>
 
 <style scoped>
-.container {
-  background-image: url("../../public/img/books-background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  justify-items: center;
-  min-height: 100vh;
-  padding-top: 6rem;
-}
-
-.v-card {
-  background: rgb(219, 197, 168) !important;
-  box-shadow: 0 0 2rem black;
-  opacity: 0.9;
-}
-
-.v-card:hover {
-  background: burlywood !important;
-  box-shadow: 0 0 0.5rem black;
-  opacity: 1;
-}
-
-.avatar {
-  height: 100%;
+.book-img-overlay {
+  display: flex;
+  position: absolute;
+  background: black;
+  opacity: 0%;
   width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
-.disabled-link {
-  text-decoration: none;
+.book-img-overlay:hover {
+  opacity: 75%;
 }
 
-a {
-  color: black !important;
+.container {
+  background: #efebe9;
 }
-.custom7cols {
-  max-width: 24%;
-  flex-basis: 20%;
-  margin: 1rem;
-}
-.search {
-  margin: 2rem 15rem;
+
+.book-img-overlay-button {
+  color: white;
 }
 </style>
