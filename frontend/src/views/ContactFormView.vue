@@ -80,13 +80,15 @@
 <style scoped>
 
 .imgBackgorund{
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     background: url("@/assets/img/contactBackground.jpg");
 
 }
 .imgBackgorundOpacity{
     background-color:rgba(0, 0, 0, 0.6);
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     padding: 5rem;
 }
 .img{
