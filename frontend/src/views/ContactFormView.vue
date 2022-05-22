@@ -1,21 +1,63 @@
 <script>
+import { reactive} from "vue";
+
   export default {
-    data: () => ({
-      valid: false,
-      title: '',
-      msg: '',
-      msgRules: [
-        v => !!v || 'Wiadomość jest wymagana',
-      ],
-      titleRules: [
-        v => !!v || 'Tytuł jest wymagany',
-      ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail jest wymagany',
-        v => /.+@.+/.test(v) || 'E-mail musi być poprawny',
-      ],
-    }),
+    setup(){
+        const libraries = reactive([
+            {
+                id: "1",
+                mail: "dsadas@dasdas.com",
+                adress: "Rzeszów Ul.Cicha 56",
+                phone: "103-323-312",
+            },
+            {
+                id: "2",
+                mail: "dsadas@dasdas.com",
+                adress: "Bźdiszewo Ul.Martwa 58",
+                phone: "103-323-312",
+            },
+            {
+                id: "3",
+                mail: "dsadas@dasdas.com",
+                adress: "Rzeszów Ul.Cicha 56",
+                phone: "103-323-312",
+            },
+            {
+                id: "4",
+                mail: "dsadas@dasdas.com",
+                adress: "Rzeszów Ul.Cicha 56",
+                phone: "103-323-312",
+            },
+            {
+                id: "5",
+                mail: "dsadas@dasdas.com",
+                adress: "Białystok Ul.Cicha 56",
+                phone: "103-323-312",
+            },
+            {
+                id: "6",
+                mail: "dsadas@dasdas.com",
+                adress: "Poznań Ul.Cicha 56",
+                phone: "103-323-312",
+            },
+            {
+                id: "7",
+                mail: "dsadas@dasdas.com",
+                adress: "Kraków Ul.Cicha 56",
+                phone: "103-323-312",
+            },
+        ])
+
+        const getCityFromAdress = function(library){
+            const splited = library.adress.split(' ')
+            return splited[0]
+        }
+
+        return {
+            libraries,
+            getCityFromAdress
+        }
+    }
   }
 </script>
 
@@ -26,53 +68,106 @@
                 <router-link to="/">
                     <v-img
                         src="@/assets/img/logo-library.png"
-                        height="10rem"
+                        height="9rem"
                     ></v-img>
                 </router-link>
             </div>
-            <v-form class="form" v-model="valid">
-                <v-divider></v-divider>
-                <v-text-field
-                    v-model="email"
-                    label="E-mail"
-                    :rules="emailRules"
-                    maxlength="70"
-                    single-line
-                    full-width
-                    required
-                ></v-text-field>
-                <v-divider></v-divider>
-                <v-text-field
-                    v-model="title"
-                    label="Temat"
-                    :rules="titleRules"
-                    single-line
-                    full-width
-                    counter
-                    maxlength="30"
-                    required
-                ></v-text-field>
-                <v-divider></v-divider>
-                <v-textarea
-                    v-model="msg"
-                    :rules="msgRules"
-                    label="Wiadomość"
-                    counter
-                    maxlength="250"
-                    full-width
-                    required
-                ></v-textarea>
-                <div class="button">
-                    <v-btn
-                        class="btn"
-                        size="x-large"
-                        color="white"
-                        type="submit"
-                    >
-                        Wyślij
-                    </v-btn>
-                </div>
-            </v-form>
+            <v-container fluid>
+                <v-row>
+                    <v-col cols="12">
+                        <v-row class="font-size">
+                            <v-col>
+                                <v-icon
+                                    large
+                                    color="teal darken-2"
+                                    >
+                                    mdi-email
+                                </v-icon>
+                                <span  class="text">biblioteka@gmail.com</span>
+                            </v-col>
+                            <v-col>
+                                <v-icon
+                                    large
+                                    color="green darken-2"
+                                    >
+                                    mdi-domain
+                                </v-icon>
+                                <span  class="text">Rzeszów ul.Piłsudzkiego 13</span>
+                            </v-col>
+                            <v-col>
+                                <v-icon
+                                    large
+                                    color="orange darken-2"
+                                    >
+                                    mdi-phone-classic
+                                </v-icon>
+                                <span  class="text">
+                                    644-322-123
+                                </span>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-expansion-panels style="font-size: 1.3rem;">
+                             <v-expansion-panel
+                                v-for="library in libraries"
+                                :key="library"
+                                style="padding: 0.5rem;"
+                             >
+                                <v-expansion-panel-title>
+                                    <v-row no-gutters>
+                                        <v-col cols="4" class="d-flex justify-start" style="font-size: 1.5rem;">
+                                        Biblioteka: {{ getCityFromAdress(library) }}
+                                        </v-col>
+                                        <v-col
+                                        cols="8"
+                                        class="text-black"
+                                        >
+                                        </v-col>
+                                    </v-row>
+                                </v-expansion-panel-title>
+                                <v-expansion-panel-text>
+                                    <v-row >
+                                        <v-col>
+                                            <v-icon
+                                                large
+                                                color="teal darken-2"
+                                                >
+                                                mdi-email
+                                            </v-icon>
+                                            <span  class="text">
+                                                {{ library.mail }}
+                                            </span>
+                                        </v-col>
+                                        <v-col>
+                                            <v-icon
+                                                large
+                                                color="green darken-2"
+                                                >
+                                                mdi-domain
+                                            </v-icon>
+                                            <span  class="text">
+                                                {{ library.adress }}
+                                            </span>
+                                        </v-col>
+                                        <v-col>
+                                            <v-icon
+                                                large
+                                                color="orange darken-2"
+                                                >
+                                                mdi-phone-classic
+                                            </v-icon>
+                                            <span  class="text">
+                                                {{ library.phone }}
+                                            </span>
+                                        </v-col>
+                                    </v-row>
+                                </v-expansion-panel-text>
+                            </v-expansion-panel>
+                        </v-expansion-panels>
+                    </v-col>
+                </v-row>
+            </v-container>
         </div>
     </div>
 </template>
@@ -80,6 +175,7 @@
 <style scoped>
 
 .imgBackgorund{
+    color: white;
     min-height: 100vh;
     height: 100%;
     background: url("@/assets/img/contactBackground.jpg");
@@ -89,23 +185,18 @@
     background-color:rgba(0, 0, 0, 0.6);
     min-height: 100vh;
     height: 100%;
-    padding: 5rem;
+    padding: 3rem;
 }
 .img{
     width: 15rem;
     margin: auto;
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
 }
 
-.form{
-    color: white;
+.font-size{
+    font-size: 2rem;
 }
-.button{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-}
-.btn{
-    padding: 3rem;
+.text{
+    padding: 0.5rem;
 }
 </style>
