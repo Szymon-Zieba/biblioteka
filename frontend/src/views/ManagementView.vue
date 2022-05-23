@@ -30,7 +30,7 @@ export default {
     };
 
     const user = {
-      role: "HEADADMIN",
+      role: "ROLE_HEADADMIN",
     };
 
     return {
