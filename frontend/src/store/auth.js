@@ -1,17 +1,17 @@
 import { defineStore } from "pinia";
-import AuthService from "../services/auth.service";
+import AuthService from "@/services/auth.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
   ? { status: { loggedIn: true }, user }
   : { status: { loggedIn: false }, user: null };
 
-export const useUserStore = defineStore("user", {
-  state: () => ({
-    initialState,
-  }),
+export const useAuth = defineStore("auth", {
+  state: () => {
+    return initialState;
+  },
   actions: {
-    login(user) {
+    async login(user) {
       return AuthService.login(user).then(
         (user) => {
           this.loginSuccess(user);
@@ -25,9 +25,9 @@ export const useUserStore = defineStore("user", {
     },
     logout() {
       AuthService.logout();
-      this.logout;
+      this.logoutSuccess();
     },
-    register(user) {
+    async register(user) {
       return AuthService.register(user).then(
         (response) => {
           this.registerSuccess();
@@ -40,15 +40,15 @@ export const useUserStore = defineStore("user", {
       );
     },
 
-    loginSuccess(user) {
+    loginSuccess(_user) {
       this.status.loggedIn = true;
-      this.user = user;
+      this.user = _user;
     },
     loginFailure() {
       this.status.loggedIn = false;
       this.user = null;
     },
-    logout() {
+    logoutSuccess() {
       this.status.loggedIn = false;
       this.user = null;
     },
