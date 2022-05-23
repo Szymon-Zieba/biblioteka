@@ -22,8 +22,8 @@ const addUser = async (user) =>{
     })  
 }
 
-const deleteUserById = async (user) =>{
-    await axios.delete(`${API_URL}/book/${user}`)
+const deleteUserById = async (id) =>{
+    await axios.delete(`${API_URL}/user/${id}`)
 }
 export {getUsers, getUserById, addUser, deleteUserById}
 
