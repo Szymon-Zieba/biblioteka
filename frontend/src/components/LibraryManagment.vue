@@ -7,25 +7,28 @@ export default {
   components: { AddLibraryPopup },
   setup() {
 
-  const libraries = ref({})
+  const libraries = ref([])
   const loadLibraries = async () =>{
      libraries.value = await getLibraries()
   }
 
   loadLibraries()
 
-  console.log(libraries.value)
-
     const showScheduleForm = false;
 
   
     const search = ref("");
 
+
     const filteredList = computed(() => {
-      return libraries.value.filter((library) =>
-        (library.city + library.streetAndNumber)
-          .toLowerCase()
-          .includes(search.value.toLowerCase())
+      return libraries.value.filter((library) => {
+        if(library.city && library.streetAndNumber)
+        return (library.city + library.streetAndNumber)
+            .toLowerCase()
+            .includes(search.value.toLowerCase())
+      }
+      
+        
       );
     });
     return {
