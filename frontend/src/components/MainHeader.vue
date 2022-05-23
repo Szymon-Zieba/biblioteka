@@ -1,22 +1,19 @@
 <script>
+import { ref } from "vue";
+import { useAuth } from "../store/auth";
 export default {
   name: "MainHeader",
   setup() {
-    // Jeśli user === null wyświetla wersję dla niezalogowanego
-    // W przeciwnym wypadku wyświetla wersję dla zalogowanego
-    // Jeśli zalogowany user ma role EMPLOYEE/ADMIN/HEADADMIN wyświetla przycisk panelu zarządania
-
-    //const user = null;
-    const user = {
-      role: "HEADADMIN",
-    };
+    const auth = useAuth();
+    const loggedIn = ref(auth.status.loggedIn);
+    const user = ref(auth.user);
 
     const isEntitledFunction = () => {
-      if (user) {
+      if (user.value) {
         return (
-          user.role === "EMPLOYEE" ||
-          user.role === "ADMIN" ||
-          user.role === "HEADADMIN"
+          user.value.role.name === "ROLE_EMPLOYEE" ||
+          user.value.role.name === "ROLE_ADMIN" ||
+          user.value.role.name === "ROLE_HEADADMIN"
         );
       } else {
         return false;
@@ -25,12 +22,16 @@ export default {
 
     const isEntitled = isEntitledFunction();
 
-    console.log(user);
-    console.log(isEntitled);
+    function logout() {
+      auth.logout();
+      location.href = "http://localhost:8080";
+    }
 
     return {
       user,
       isEntitled,
+      loggedIn,
+      logout,
     };
   },
 };
@@ -50,7 +51,7 @@ export default {
     <v-item-group id="header-menu">
       <v-btn
         to="/management"
-        v-if="isEntitled"
+        v-if="loggedIn && isEntitled"
         elevation="0"
         color="transparent"
         style="color: red"
@@ -58,15 +59,10 @@ export default {
       >
       <v-btn to="/books" tile elevation="0" color="transparent">OFERTA</v-btn>
       <v-btn to="contact" tile elevation="0" color="transparent">KONTAKT</v-btn>
-      <v-btn v-if="user === null" to="/login" elevation="0" color="transparent">
+      <v-btn v-if="!loggedIn" to="/login" elevation="0" color="transparent">
         LOGOWANIE
       </v-btn>
-      <v-btn
-        v-if="user === null"
-        to="/register"
-        elevation="0"
-        color="transparent"
-      >
+      <v-btn v-if="!loggedIn" to="/register" elevation="0" color="transparent">
         REJESTRACJA
       </v-btn>
       <v-btn
@@ -82,7 +78,7 @@ export default {
               <v-list-item-title>Szczegóły konta</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title>Wyloguj</v-list-item-title>
+              <v-list-item-title @click="logout()">Wyloguj</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>

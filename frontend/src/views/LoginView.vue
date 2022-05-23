@@ -1,11 +1,36 @@
 <script>
-import { ref } from "@vue/reactivity";
+import { ref } from "vue";
+import { useAuth } from "../store/auth";
 export default {
   setup() {
     const showPassword = ref(false);
 
+    const auth = useAuth();
+
+    const user = ref({
+      email: "",
+      password: "",
+    });
+
+    const errorMessage = ref(null);
+
+    function login() {
+      console.log(user.value);
+      auth.login(user.value).then((response) => {
+        if (response.message) {
+          errorMessage.value = response.message;
+        } else {
+          location.href = "http://localhost:8080";
+        }
+      });
+    }
+
     return {
       showPassword,
+      auth,
+      user,
+      login,
+      errorMessage,
     };
   },
 };
@@ -23,6 +48,7 @@ export default {
       <v-form>
         <!-- E-mail input -->
         <v-text-field
+          v-model="user.email"
           append-icon="mdi-account"
           :type="'text'"
           label="E-mail"
@@ -31,6 +57,7 @@ export default {
 
         <!-- Password input -->
         <v-text-field
+          v-model="user.password"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           :type="showPassword ? 'text' : 'password'"
           label="Hasło"
@@ -38,7 +65,12 @@ export default {
           @click:append="showPassword = !showPassword"
         ></v-text-field>
       </v-form>
-      <v-btn size="x-large" top="50" color="brown" to="/">ZALOGUJ</v-btn>
+      <v-btn @click="login()" size="x-large" top="50" color="brown"
+        >ZALOGUJ</v-btn
+      >
+      <div v-if="errorMessage" class="error-message">
+        <span>{{ errorMessage }}</span>
+      </div>
 
       <router-link style="color: black; margin-top: 70px" to="/register"
         >Nie masz konta? Zarejestruj</router-link
@@ -79,5 +111,10 @@ export default {
   height: 100vh;
   display: flex;
   justify-content: right;
+}
+
+.error-message {
+  margin-top: -45px;
+  margin-bottom: 25px;
 }
 </style>
