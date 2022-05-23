@@ -1,37 +1,35 @@
 <script>
 import AddLibraryPopup from "@/components/AddLibraryPopup.vue";
-import { ref, reactive, computed } from "vue";
+import { ref, computed } from "vue";
+import {getLibraries, deleteLibraryById} from "../services/library.service"
+
 export default {
   components: { AddLibraryPopup },
   setup() {
+
+  const libraries = ref({})
+  const loadLibraries = async () =>{
+     libraries.value = await getLibraries()
+  }
+
+  loadLibraries()
+
+  console.log(libraries.value)
+
     const showScheduleForm = false;
 
-    const libraries = reactive([
-      {
-        city: "Rzeszów",
-        streetAndNumber: "cicha 12",
-        postCode: "39-322",
-        phoneNumber: "323-321-321",
-        email: "email@dsa.com",
-      },
-      {
-        city: "Rzeszów",
-        streetAndNumber: "cicha 12",
-        postCode: "39-322",
-        phoneNumber: "323-321-321",
-        email: "email@dsa.com",
-      },
-    ]);
+  
     const search = ref("");
 
     const filteredList = computed(() => {
-      return libraries.filter((library) =>
+      return libraries.value.filter((library) =>
         (library.city + library.streetAndNumber)
           .toLowerCase()
           .includes(search.value.toLowerCase())
       );
     });
     return {
+      deleteLibraryById,
       showScheduleForm,
       libraries,
       search,
@@ -40,6 +38,7 @@ export default {
   },
 };
 </script>
+
 
 <template>
   <div class="main">
@@ -62,24 +61,28 @@ export default {
           <th class="text-left">Email</th>
         </tr>
       </thead>
+
       <tbody>
         <tr
           style="margin-top: 50px"
-          v-for="(library, index) in filteredList"
+          v-for="(library) in filteredList"
           :key="library"
         >
-          <td>{{ index }}</td>
+          <td>{{ library.id }}</td>
           <td>{{ library.city }}</td>
           <td>{{ library.streetAndNumber }}</td>
           <td>{{ library.postCode }}</td>
           <td>{{ library.phoneNumber }}</td>
           <td>{{ library.email }}</td>
-          <td><v-btn color="red">Usun</v-btn></td>
+          <td><v-btn @click="deleteLibraryById(library.id)" color="red">Usun</v-btn></td>
+    
         </tr>
+
       </tbody>
     </v-table>
   </div>
 </template>
+
 
 <style scoped>
 .main {

@@ -1,8 +1,22 @@
 <script>
+import { ref } from "vue";
+import {addLibrary} from "../services/library.service"
+
 export default {
-  data() {
+  setup() {
+
+    const dialog = ref(false)
+    const library = ref({
+      city: null,
+      streetAndNumber: null,
+      email: null,
+      postCode: null,
+      phoneNumber: null,
+    })
     return {
-      dialog: false,
+      addLibrary,
+      library,
+      dialog,
     };
   },
 };
@@ -20,27 +34,27 @@ export default {
         </v-card-title>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
-            v-model="city"
+            v-model="library.city"
             label="Miasto"
             required
           ></v-text-field>
 
           <v-text-field
-            v-model="streetAndNumber"
+            v-model="library.streetAndNumber"
             label="Ulica i numer"
             required
           ></v-text-field>
 
-          <v-text-field v-model="email" label="E-mail" required></v-text-field>
+          <v-text-field v-model="library.email" label="E-mail" required></v-text-field>
 
           <v-text-field
-            v-model="postCode"
+            v-model="library.postCode"
             label="Kod pocztowy"
             required
           ></v-text-field>
 
           <v-text-field
-            v-model="phoneNumber"
+            v-model="library.phoneNumber"
             label="Numer telefonu"
             required
           ></v-text-field>
@@ -56,7 +70,7 @@ export default {
           <v-spacer></v-spacer>
           <v-btn color="orange" text @click="dialog = false"> Reset </v-btn>
           <v-btn color="orange" text @click="dialog = false"> Wyjdź </v-btn>
-          <v-btn color="orange" text @click="dialog = false">
+          <v-btn color="orange" text @click="addLibrary(library)">
             Zapisz biblioteke
           </v-btn>
         </v-card-actions>

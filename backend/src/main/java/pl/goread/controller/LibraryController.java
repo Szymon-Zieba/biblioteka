@@ -20,6 +20,12 @@ public class LibraryController {
 
     @PostMapping("/library")
     public Library addLibrary(@RequestBody Library library){
+        System.out.println(library);
         return libraryRepository.save(library);
+    }
+
+    @DeleteMapping("/library/{id}")
+    public void deleteLibrary(@PathVariable Long id){
+        libraryRepository.delete(libraryRepository.getById(id));
     }
 }
