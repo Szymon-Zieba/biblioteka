@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class BookController {
 
     private final BookRepository bookRepository;

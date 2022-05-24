@@ -32,6 +32,8 @@ props: ["role"],
       const user = {
         role: "HEADADMIN",
       };
+
+        
      return { 
       demands,
       user,
@@ -43,11 +45,6 @@ props: ["role"],
 
 <template>
   <div class="main">
-
-
-<!--  POPUP TUTAJ ZMIEN KURWA dsaaaaaaaaaaaaaaaaa-->
-
-
 
     <v-table theme="light">
       <thead>
@@ -68,10 +65,8 @@ props: ["role"],
           <td>{{ demand.title }}</td>
           <td>{{ demand.author }}</td>
           <td>{{ demand.count }}</td>
-          <div v-if="user.role === `HEADADMIN`">
-            <td><AddBookFromBookDemandingPopup v-model="showScheduleForm" /> </td>
-            <td><v-btn class="button" color="red">Usun z rejestru</v-btn></td>
-          </div>
+          <td v-if="user.role === `HEADADMIN`"><AddBookFromBookDemandingPopup v-model="showScheduleForm"/> </td>
+          <td v-if="user.role === `HEADADMIN`"><v-btn class="button mt-1" onClick="showScheduleForm=true" color="red">Usun z rejestru</v-btn></td>
         </tr>
         <tr>
           <td><v-text-field style="margin-bottom: -30px;"
