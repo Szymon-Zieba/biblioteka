@@ -1,81 +1,20 @@
 <script>
 import MainHeader from "@/components/MainHeader.vue";
 import MainFooter from "@/components/MainFooter.vue";
-import { ref, reactive, computed } from "vue";
+import { ref, computed } from "vue";
+import useBooks from "../composables/useBooks.js"
+
 export default {
   components: { MainHeader, MainFooter },
   setup() {
-    const books = reactive([
-      {
-        id: "1",
-        title: "zgredek",
-        author: "J.K.Rowling",
-        genre: "Fantasy",
-        text: "Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ",
-        img: "../../public/img/Harry_Potter_I_Więzień_Azkabanu.png",
-      },
-      {
-        id: "2",
-        title: "Harry Potter2",
-        author: "J.K.Rowling2",
-        genre: "Fantasy2",
-        text: "Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ",
-        img: "../../public/img/Harry_Potter_I_Więzień_Azkabanu.png",
-      },
-      {
-        id: "3",
-        title: "Harry Potter3",
-        author: "J.K.Rowling3",
-        genre: "Fantasy3",
-        text: "Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ",
-        img: "../../public/img/Harry_Potter_I_Więzień_Azkabanu.png",
-      },
-      {
-        id: "4",
-        title: "Harry Potter4",
-        author: "J.K.Rowling4",
-        genre: "Fantasy4",
-        text: "Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ",
-        img: "../../public/img/Harry_Potter_I_Więzień_Azkabanu.png",
-      },
-      {
-        id: "5",
-        title: "Harry Potter5",
-        author: "J.K.Rowling5",
-        genre: "Fantasy5",
-        text: "Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ",
-        img: "../../public/img/Harry_Potter_I_Więzień_Azkabanu.png",
-      },
-      {
-        id: "6",
-        title: "Harry Potter6",
-        author: "J.K.Rowling6",
-        genre: "Fantasy6",
-        text: "Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ",
-        img: "../../public/img/Harry_Potter_I_Więzień_Azkabanu.png",
-      },
-      {
-        id: "7",
-        title: "Harry Potter7",
-        author: "J.K.Rowling7",
-        genre: "Fantasy4",
-        text: "Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ",
-        img: "../../public/img/Harry_Potter_I_Więzień_Azkabanu.png",
-      },
-      {
-        id: "8",
-        title: "Harry Potter8",
-        author: "J.K.Rowling8",
-        genre: "Fantasy4",
-        text: "Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody... ",
-        img: "../../public/img/Harry_Potter_I_Więzień_Azkabanu.png",
-      },
-    ]);
+
+    const {books, loadBooks} = useBooks()
+    loadBooks()
 
     const search = ref("");
 
     const filteredList = computed(() => {
-      return books.filter((book) =>
+      return books.value.filter((book) =>
         (book.title + book.genre)
           .toLowerCase()
           .includes(search.value.toLowerCase())
@@ -117,7 +56,7 @@ export default {
               <v-img
                 class="book-img"
                 cover
-                src="../../public/img/harry-potter-kamien-filozoficzny.jpg"
+                :src="book.imgUrl"
               >
                 <div class="book-img-overlay">
                   <span class="book-img-overlay-button">Szczegóły</span>
