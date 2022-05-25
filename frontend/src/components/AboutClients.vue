@@ -1,32 +1,30 @@
 <script>
-import { ref, computed } from "vue"
-import { getUsers } from '@/services/user.service'
+import { ref, computed } from "vue";
+import { getUsers } from "@/services/user.service";
 export default {
   setup() {
+    const clients = ref([]);
 
-    const clients = ref([
-      ])
+    const loadClients = async () => {
+      clients.value = await getUsers();
+    };
+    loadClients();
 
-    const loadClients = async () =>{
-    clients.value = await getUsers()
-    }
-    loadClients()
-
-    const search = ref("")
+    const search = ref("");
 
     const filteredList = computed(() => {
       return clients.value.filter((client) =>
         (client.pesel + client.email)
           .toLowerCase()
           .includes(search.value.toLowerCase())
-      )
-    })
+      );
+    });
     return {
       search,
       filteredList,
     };
   },
-}
+};
 </script>
 
 <template>
@@ -55,8 +53,8 @@ export default {
           :key="client"
         >
           <td>{{ client.id }}</td>
-          <td>{{ client.first_name }}</td>
-          <td>{{ client.last_Name }}</td>
+          <td>{{ client.firstName }}</td>
+          <td>{{ client.lastName }}</td>
           <td>{{ client.email }}</td>
           <td>{{ client.pesel }}</td>
         </tr>
