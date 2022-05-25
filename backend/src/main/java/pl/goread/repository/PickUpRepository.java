@@ -11,10 +11,8 @@ import java.util.List;
 @Repository
 public interface PickUpRepository extends JpaRepository<PickUp, Long> {
 
-    List<PickUp> getPickUpById(Hire hire);
-
-    @Query(value = "SELECT * FROM pick_up p JOIN hire h ON p.hire_id=h.id WHERE h.id=:id",
+    @Query(value = "SELECT * FROM pick_up p JOIN hire h ON p.hire_id=h.id WHERE p.hire_id=:id",
             nativeQuery = true)
-    List<PickUp> getPickUpsById(@Param("id")Long id);
+    PickUp getPickUpByHireId(@Param("id")Long id);
 
 }

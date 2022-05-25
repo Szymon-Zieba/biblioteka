@@ -11,9 +11,6 @@ public class PickUpService {
 
     private final pl.goread.repository.PickUpRepository pickUpRepository;
 
-    public List<PickUp> getPickUpById(Hire hire){
-        return pickUpRepository.getPickUpById(hire);
-    }
 
     public PickUp addPickup(PickUp pickup){
         return pickUpRepository.save(pickup);
