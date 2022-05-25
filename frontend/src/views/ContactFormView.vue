@@ -1,61 +1,18 @@
 <script>
-import { reactive} from "vue";
+import { ref} from "vue";
+import {getLibraries} from '../services/library.service.js'
 
   export default {
     setup(){
-        const libraries = reactive([
-            {
-                id: "1",
-                mail: "dsadas@dasdas.com",
-                adress: "Rzeszów Ul.Cicha 56",
-                phone: "103-323-312",
-            },
-            {
-                id: "2",
-                mail: "dsadas@dasdas.com",
-                adress: "Bźdiszewo Ul.Martwa 58",
-                phone: "103-323-312",
-            },
-            {
-                id: "3",
-                mail: "dsadas@dasdas.com",
-                adress: "Rzeszów Ul.Cicha 56",
-                phone: "103-323-312",
-            },
-            {
-                id: "4",
-                mail: "dsadas@dasdas.com",
-                adress: "Rzeszów Ul.Cicha 56",
-                phone: "103-323-312",
-            },
-            {
-                id: "5",
-                mail: "dsadas@dasdas.com",
-                adress: "Białystok Ul.Cicha 56",
-                phone: "103-323-312",
-            },
-            {
-                id: "6",
-                mail: "dsadas@dasdas.com",
-                adress: "Poznań Ul.Cicha 56",
-                phone: "103-323-312",
-            },
-            {
-                id: "7",
-                mail: "dsadas@dasdas.com",
-                adress: "Kraków Ul.Cicha 56",
-                phone: "103-323-312",
-            },
-        ])
-
-        const getCityFromAdress = function(library){
-            const splited = library.adress.split(' ')
-            return splited[0]
+        const libraries = ref([])
+        const loadLibraries = async () =>{
+            libraries.value = await getLibraries()
         }
+
+        loadLibraries()
 
         return {
             libraries,
-            getCityFromAdress
         }
     }
   }
@@ -117,7 +74,7 @@ import { reactive} from "vue";
                                 <v-expansion-panel-title>
                                     <v-row no-gutters>
                                         <v-col cols="4" class="d-flex justify-start" style="font-size: 1.5rem;">
-                                        Biblioteka: {{ getCityFromAdress(library) }}
+                                        Biblioteka: {{ library.city }}
                                         </v-col>
                                         <v-col
                                         cols="8"
@@ -136,7 +93,7 @@ import { reactive} from "vue";
                                                 mdi-email
                                             </v-icon>
                                             <span  class="text">
-                                                {{ library.mail }}
+                                                {{ library.email }}
                                             </span>
                                         </v-col>
                                         <v-col>
@@ -147,7 +104,7 @@ import { reactive} from "vue";
                                                 mdi-domain
                                             </v-icon>
                                             <span  class="text">
-                                                {{ library.adress }}
+                                              {{library.city + ' ' + library.postCode + '   ul.' + library.streetAndNumber}}
                                             </span>
                                         </v-col>
                                         <v-col>
@@ -158,7 +115,7 @@ import { reactive} from "vue";
                                                 mdi-phone-classic
                                             </v-icon>
                                             <span  class="text">
-                                                {{ library.phone }}
+                                                {{ library.phoneNumber }}
                                             </span>
                                         </v-col>
                                     </v-row>
