@@ -4,25 +4,21 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
 @Data
-public class Hire {
+public class PickUp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private Set<Book> books;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Hire hire;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Library library;
-
-    private LocalDateTime hireDate;
+    private LocalDateTime pickUpDate;
 }
