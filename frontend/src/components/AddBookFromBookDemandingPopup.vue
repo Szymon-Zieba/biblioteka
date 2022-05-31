@@ -2,73 +2,82 @@
 import {ref, reactive} from 'vue'
 import { addBook } from '../services/book.service.js'
 export default {
+  props: ["role"],
+  setup(){
+    let form = ref(null)
+    let valid = ref(false)
+    let dialog = ref(false)
+    let imgFile = ref([])
+    let snackbar = ref(false)
 
-setup(){
-  let form = ref(null)
-  let valid = ref(false)
-  let dialog = ref(false)
-  let imgFile = ref([])
-  let snackbar = ref(false)
-
-  let book = reactive({
-    title: "",
-    authors: [
-      {
-      name: "",
-      lastName: "Siema"
-      }
-    ],
-    publishmentYear: "",
-    publishmentHouse: {
-      name: ""
-    },
-    category: {
-      name: ""
-    },
-    description: "",
-  })
-
-  const submitForm = () => {
-    form.value.validate().then((call) => {
-      if(call.valid){
-        addBook({...book, imgUrl: imgFile.value[0].name} )
-        dialog.value = false
-        snackbar.value = true
-      }
-    })    
-  }
-
-  function addInput(){
-    if(book.authors.length > 4){
-      return
-    }
-    book.authors.push({
-      name: "",
-      lastName: ""
+    let book = reactive({
+      title: "",
+      author: [
+        {
+        name: "",
+        lastName: ""
+        }
+      ],
+      publishmentYear: "",
+      publishmentHouse: {
+        name: ""
+      },
+      category: {
+        name: ""
+      },
+      description: "",
     })
-  }
 
-  function removeInput(index){
-    if(index == 0){
-      return
+    const submitFormHeadAdmin = () => {
+      form.value.validate().then((call) => {
+        if(call.valid){
+          addBook({...book, imgUrl: imgFile.value[0].name, status: "IN_STOCK"} )
+          dialog.value = false
+          snackbar.value = true
+        }
+      })    
     }
-    book.authors.splice(index,1)
+
+    const submitFormEmployee = () => {
+      form.value.validate().then((call) => {
+        if(call.valid){
+          addBook({...book, imgUrl: imgFile.value[0].name, status: "IN_DEMAND"} )
+          dialog.value = false
+          snackbar.value = true
+        }
+      })    
+    }
+
+    function addInput(){
+      if(book.author.length > 4){
+        return
+      }
+      book.author.push({
+        name: "",
+        lastName: ""
+      })
+    }
+
+    function removeInput(index){
+      if(index == 0){
+        return
+      }
+      book.author.splice(index,1)
+    }  
+
+    return {
+      dialog,
+      addInput,
+      removeInput,
+      book,
+      submitFormEmployee,
+      submitFormHeadAdmin,
+      valid,
+      form,
+      imgFile,
+      snackbar
+    }
   }  
-
-
-  return {
-    dialog,
-    addInput,
-    removeInput,
-    book,
-    submitForm,
-    valid,
-    form,
-    imgFile,
-    snackbar
-  }
-}
-  
 };
 
 </script>
@@ -77,7 +86,8 @@ setup(){
   <v-row justify="center" style="box-shadow: 0 0 0 black">
     <v-dialog v-model="dialog" persistent>
       <template v-slot:activator="{ props }">
-        <v-btn color="green" v-bind="props"> Dodaj Książkę do bazy </v-btn>
+        <v-btn color="green" v-if="role === `ROLE_HEADADMIN`"  v-bind="props"> Dodaj Książkę do bazy </v-btn>
+        <v-btn color="green"  v-if="role === `ROLE_EMPLOYEE` || role === `ROLE_ADMIN`" v-bind="props"> Dodaj Książkę do rejestru zapotrzebowania </v-btn>
       </template>
       <v-card class="pa-15">
         <v-card-title class="text-h5">
@@ -89,11 +99,16 @@ setup(){
             v-model="book.title"
             label="Tytuł"
           ></v-text-field>
-          <div class="autors" v-for="(author, i) in book.authors" :key="i">
+          <div class="autors" v-for="(author, i) in book.author" :key="i">
             <v-text-field
-              :rules="[v => !!v || 'Autor ' + i + ' jest wymagany']"
+              :rules="[v => !!v || 'Imie Autora ' + i + ' jest wymagane']"
               v-model="author.name"
-              :label='"Autor " + (i+1)'
+              :label='"Imię Autora " + (i+1)'
+            ></v-text-field>
+            <v-text-field
+              :rules="[v => !!v || 'Nazwisko Autora ' + i + ' jest wymagane']"
+              v-model="author.lastName"
+              :label='"Nazwisko Autora " + (i+1)'
             ></v-text-field>
             <v-icon class="autors-button" @click="addInput();" color="orange">
               mdi-plus
@@ -136,7 +151,8 @@ setup(){
           <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="orange" text @click="dialog = false"> Wyjdź </v-btn>
-          <v-btn color="orange" text @click="submitForm()"> Zapisz książkę </v-btn>
+          <v-btn v-if="role === `ROLE_HEADADMIN`" color="orange" text @click="submitFormHeadAdmin()"> Zapisz książkę </v-btn>
+          <v-btn v-if="role === `ROLE_EMPLOYEE` || role === `ROLE_ADMIN`" color="orange" text @click="submitFormEmployee()"> Zapisz książkę </v-btn>
         </v-card-actions>
         </v-form>
         

@@ -15,7 +15,6 @@ import java.util.Optional;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@CrossOrigin
 public class BookController {
 
     private final BookRepository bookRepository;
@@ -39,6 +38,11 @@ public class BookController {
     @PostMapping("/book")
     public Book postBook(@RequestBody Book book) {
         return bookService.addBook(book);
+    }
+
+    @PatchMapping("/book/{id}")
+    public void updateBook(@PathVariable Long id,@RequestParam String status) {
+       bookService.updateBook(id, status);
     }
 
     @DeleteMapping("/book/{id}")

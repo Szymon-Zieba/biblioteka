@@ -1,20 +1,20 @@
 package pl.goread.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.goread.model.Author;
 import pl.goread.model.Book;
 import pl.goread.model.Category;
+import pl.goread.model.enums.DemandBookStatus;
 import pl.goread.repository.AuthorRepository;
 import pl.goread.repository.BookRepository;
 import pl.goread.repository.CategoryRepository;
 import pl.goread.repository.PublishmentHouseRepository;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
@@ -46,10 +46,18 @@ public class BookService {
         return bookRepository.findByTitleContains(input);
     }
 
+    public void updateBook(Long id, String status){
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(BOOK_NOT_FOUND_MSG));
+        System.out.println(bookRepository.findById(id));
+        book.setStatus(DemandBookStatus.valueOf(status));
+        System.out.println(book.getStatus());
+
+        bookRepository.save(book);
+    }
+
     public Book addBook(Book book){
         ArrayList<Author> authorList = new ArrayList<>();
-
-
         for(int i = 0; i < book.getAuthor().size(); i++) {
             Author a = new ArrayList<Author>(book.getAuthor()).get(i);
             boolean booleanAuthorByNameAndLastName =  authorRepository.existsAuthorByNameAndLastName(a.getName(), a.getLastName());
@@ -57,7 +65,6 @@ public class BookService {
                 authorRepository.save(a);
             }
             authorList.add(i, authorRepository.findByNameAndLastName(a.getName(), a.getLastName()));
-
         }
         book.setAuthor(new HashSet<>(authorList));
 

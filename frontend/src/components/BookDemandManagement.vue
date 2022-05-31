@@ -1,5 +1,8 @@
 <script>
 import AddBookFromBookDemandingPopup from './AddBookFromBookDemandingPopup.vue';
+import { computed } from "vue";
+import useBooks from "../composables/useBooks.js"
+import { addBook, updateBook } from '../services/book.service.js'
 export default {
   components: { AddBookFromBookDemandingPopup },
 
@@ -8,37 +11,36 @@ props: ["role"],
     setup(){
       const showScheduleForm = false;
 
-      const demands = ([
-      {
-      id: '1',
-      count: '5',
-      title: 'Zmierzch',
-      author: 'S. Meyer',
-      },
-      {
-      id:'2',
-      count: '2',
-      title: '365 dni',
-      author: 'B. Lipińska',
-      },
-      {
-      id:'3',
-      count: '6',
-      title: 'Ogniem i mieczem ',
-      author: 'H. Sienkiewicz',
+      const {books, loadBooks} = useBooks()
+      
+      loadBooks()
+
+      const demands = computed(() => {
+        return books.value.filter((book) =>
+          book.status === "IN_DEMAND")  
+      })
+
+      function authorNameLastName(authors){
+        return authors.map(author => author.name + ' ' + author.lastName).join(', ')
       }
-        ]);
+      const statusDelete = "NOT_AVAILABLE"
+      const statusAdd = "IN_STOCK"
 
-      const user = {
-        role: "HEADADMIN",
-      };
+      async function updateBookFunction(id, status){
+        await updateBook(id, status)
 
-        
+        loadBooks()
+      } 
+
      return { 
       demands,
-      user,
-      showScheduleForm
-        }
+      showScheduleForm,
+      authorNameLastName,
+      addBook,
+      statusDelete,
+      statusAdd,
+      updateBookFunction
+    }
     }
     }
 </script>
@@ -51,8 +53,12 @@ props: ["role"],
         <tr>
           <th class="text-left">Id</th>
           <th class="text-left">Tytuł</th>
-          <th class="text-left">Autor</th>
-          <th class="text-left">Liczba zapytań</th>
+          <th class="text-left">Autorzy</th>
+          <th class="text-left">Rok publikacji</th>
+          <th class="text-left">Wydawnictwo</th>
+          <th class="text-left">Kategoria</th>
+          <th class="text-left">Opis</th>
+          <th class="text-left">Zdjęcie</th>
         </tr>
       </thead>
       <tbody>
@@ -63,33 +69,32 @@ props: ["role"],
         >
           <td>{{ demand.id }}</td>
           <td>{{ demand.title }}</td>
-          <td>{{ demand.author }}</td>
-          <td>{{ demand.count }}</td>
-          <td v-if="user.role === `HEADADMIN`"><AddBookFromBookDemandingPopup v-model="showScheduleForm"/> </td>
-          <td v-if="user.role === `HEADADMIN`"><v-btn class="button mt-1" onClick="showScheduleForm=true" color="red">Usun z rejestru</v-btn></td>
+          <td>{{ authorNameLastName(demand.author) }}</td>
+          <td>{{ demand.publishmentYear }}</td>
+          <td>{{ demand.publishmentHouse.name }}</td>
+          <td>{{ demand.category.name }}</td>
+          <td>{{ demand.description.substring(0,20) + '...' }}</td>
+          <td><img :src="demand.imgUrl"></td>
+          <td v-if="role === `ROLE_HEADADMIN` || role === `ROLE_ADMIN`"><v-btn class="button" @click="updateBookFunction(demand.id, statusDelete)" color="red">Usun</v-btn></td>
+          <td v-if="role === `ROLE_HEADADMIN`"><v-btn class="button" @click="updateBookFunction(demand.id, statusAdd)" color="blue">Dodaj</v-btn></td>
         </tr>
-        <tr>
-          <td><v-text-field style="margin-bottom: -30px;"
-              label="Tytuł"
-          ></v-text-field></td>
-          <td><v-text-field style="margin-bottom: -30px;"
-              label="Autor"
-          ></v-text-field></td>
-          <td><v-text-field style="margin-bottom: -30px;"
-              label="Ile osób"></v-text-field></td>
-          <td><v-btn color="green">Dodaj do rejestru</v-btn></td>
-        </tr>
+        
       </tbody>
     </v-table>
+    <div class="center-button">
+      <AddBookFromBookDemandingPopup  :role="role" v-model="showScheduleForm"/>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.main {
-  padding: 2rem;
-  max-width: 102rem;
-}
-.button{
-  margin-left: 2rem;
-}
+  .main {
+    padding: 2rem;
+    max-width: 90%;
+  }
+  .center-button{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
 </style>
