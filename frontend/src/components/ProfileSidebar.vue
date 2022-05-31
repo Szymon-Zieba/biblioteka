@@ -1,16 +1,25 @@
 <script>
+import { useAuth } from "../store/auth";
 export default {
   props: ["width"],
   emits: ["select-content"],
 
   setup(props, context) {
+    const auth = useAuth();
+
     const emitToParent = () => {
       context.emit("select-content");
     };
 
+    function logout() {
+      auth.logout();
+      location.href = "http://localhost:8080";
+    }
+
     return {
       props,
       emitToParent,
+      logout,
     };
   },
 };
@@ -41,7 +50,7 @@ export default {
         </v-list>
         <template v-slot:append>
           <div class="pa-2">
-            <v-btn to="/logout" block color="brown"> Wyloguj </v-btn>
+            <v-btn @click="logout()" block color="brown"> Wyloguj </v-btn>
           </div>
         </template>
       </v-navigation-drawer>

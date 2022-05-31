@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import pl.goread.model.Role;
 import pl.goread.model.User;
 import pl.goread.payload.AuthenticationRequest;
 import pl.goread.payload.AuthenticationResponse;
@@ -23,6 +24,8 @@ import pl.goread.security.jwt.JWTUtils;
 @RequiredArgsConstructor
 @CrossOrigin
 public class AuthController {
+
+    private static final String USER_ROLE_NAME = "ROLE_USER";
 
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
@@ -65,7 +68,11 @@ public class AuthController {
                 passwordEncoder.encode(request.password())
         );
 
-        user.setRole(roleRepository.findRoleByName("ROLE_USER"));
+        if(!roleRepository.existsByName(USER_ROLE_NAME)){
+            roleRepository.save(new Role(USER_ROLE_NAME));
+        }
+
+        user.setRole(roleRepository.findRoleByName(USER_ROLE_NAME));
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("Zarejestrowano pomyślnie!"));
