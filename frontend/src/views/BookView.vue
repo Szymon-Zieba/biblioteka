@@ -12,15 +12,16 @@ export default {
 
     const search = ref("");
 
+
     const filteredList = computed(() => {
       return books.value.filter((book) =>
         (book.title + book.genre)
           .toLowerCase()
-          .includes(search.value.toLowerCase())
-      );
+          .includes(search.value.toLowerCase()) &&
+       book.status === "IN_STOCK") 
     });
+
     return {
-      books,
       filteredList,
       search,
     };

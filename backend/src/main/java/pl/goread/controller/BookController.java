@@ -40,6 +40,11 @@ public class BookController {
         return bookService.addBook(book);
     }
 
+    @PatchMapping("/book/{id}")
+    public void updateBook(@PathVariable Long id,@RequestParam String status) {
+       bookService.updateBook(id, status);
+    }
+
     @DeleteMapping("/book/{id}")
     public void deleteBook(@PathVariable Long id) {
         bookRepository.delete(bookService.getBookById(id));

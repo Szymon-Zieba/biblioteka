@@ -2,6 +2,7 @@ package pl.goread.model;
 
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
+import pl.goread.model.enums.DemandBookStatus;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -31,4 +32,8 @@ public class Book {
     private String description;
 
     private String imgUrl;
+
+    @Enumerated(EnumType.STRING)
+    private DemandBookStatus status;
+
 }
