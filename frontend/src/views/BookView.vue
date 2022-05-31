@@ -2,14 +2,13 @@
 import MainHeader from "@/components/MainHeader.vue";
 import MainFooter from "@/components/MainFooter.vue";
 import { ref, computed } from "vue";
-import useBooks from "../composables/useBooks.js"
+import useBooks from "../composables/useBooks.js";
 
 export default {
   components: { MainHeader, MainFooter },
   setup() {
-
-    const {books, loadBooks} = useBooks()
-    loadBooks()
+    const { books, loadBooks } = useBooks();
+    loadBooks();
 
     const search = ref("");
 
@@ -53,11 +52,7 @@ export default {
         >
           <v-card elevation="1" class="book-card">
             <router-link to="/book">
-              <v-img
-                class="book-img"
-                cover
-                :src="book.imgUrl"
-              >
+              <v-img class="book-img" cover :src="book.imgUrl">
                 <div class="book-img-overlay">
                   <span class="book-img-overlay-button">Szczegóły</span>
                 </div>

@@ -14,10 +14,12 @@
     "electron-is-dev": "^2.0.0",
     "pinia": "^2.0.13",
     "roboto-fontface": "*",
+    "vee-validate": "^4.5.11",
     "vue": "^3.2.13",
     "vue-router": "^4.0.14",
     "vuetify": "npm:@vuetify/nightly@next",
-    "webfontloader": "^1.0.0"
+    "webfontloader": "^1.0.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
