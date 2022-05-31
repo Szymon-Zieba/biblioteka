@@ -87,7 +87,8 @@ export default {
       pesel: yup
         .string()
         .length(11, "PESEL składa się z dokładnie 11 znaków")
-        .required("PESEL jest wymagany"),
+        .required("PESEL jest wymagany")
+        .nullable(),
       oldPassword: yup.string().required("Aktualne hasło jest wymagane"),
     });
 
