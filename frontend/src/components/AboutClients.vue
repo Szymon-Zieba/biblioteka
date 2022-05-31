@@ -1,33 +1,30 @@
 <script>
-import { ref, reactive, computed } from "vue"
+import { ref, computed } from "vue";
+import { getUsers } from "@/services/user.service";
 export default {
   setup() {
-    const showScheduleForm = false
+    const clients = ref([]);
 
-    const clients = reactive([
-        {name:'Asia', lastName:'Asia', email:'jatoty@gamil.com', pesel:'213412123'},
-        {name:'Kasia', lastName:'NieAsia', email:'jatoty@gamil.com', pesel:'213412123'},
-        {name:'Mariola', lastName:'NieAsia', email:'jatoty@gamil.com', pesel:'213412123'},
-        {name:'Karol', lastName:'NieAsia', email:'jatoty@gamil.com', pesel:'213412123'},
-        {name:'Ktos', lastName:'NieAsia', email:'jatoty@gamil.com', pesel:'213412123'}   
-    ])
-    const search = ref("")
+    const loadClients = async () => {
+      clients.value = await getUsers();
+    };
+    loadClients();
+
+    const search = ref("");
 
     const filteredList = computed(() => {
-      return clients.filter((client) =>
-        (client.name + client.lastName)
+      return clients.value.filter((client) =>
+        (client.pesel + client.email)
           .toLowerCase()
           .includes(search.value.toLowerCase())
-      )
-    })
+      );
+    });
     return {
-      showScheduleForm,
-      clients,
       search,
       filteredList,
     };
   },
-}
+};
 </script>
 
 <template>
@@ -52,11 +49,11 @@ export default {
       <tbody>
         <tr
           style="margin-top: 50px"
-          v-for="(client, index) in filteredList"
+          v-for="client in filteredList"
           :key="client"
         >
-          <td>{{ index }}</td>
-          <td>{{ client.name }}</td>
+          <td>{{ client.id }}</td>
+          <td>{{ client.firstName }}</td>
           <td>{{ client.lastName }}</td>
           <td>{{ client.email }}</td>
           <td>{{ client.pesel }}</td>

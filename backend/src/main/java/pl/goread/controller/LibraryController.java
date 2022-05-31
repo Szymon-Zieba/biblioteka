@@ -1,9 +1,7 @@
 package pl.goread.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.goread.model.Library;
 import pl.goread.repository.LibraryRepository;
 
@@ -18,5 +16,16 @@ public class LibraryController {
     @GetMapping("/libraries")
     public List<Library> getLibraries(){
         return libraryRepository.findAll();
+    }
+
+    @PostMapping("/library")
+    public Library addLibrary(@RequestBody Library library){
+        System.out.println(library);
+        return libraryRepository.save(library);
+    }
+
+    @DeleteMapping("/library/{id}")
+    public void deleteLibrary(@PathVariable Long id){
+        libraryRepository.delete(libraryRepository.getById(id));
     }
 }

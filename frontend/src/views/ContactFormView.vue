@@ -1,21 +1,20 @@
 <script>
+import { ref} from "vue";
+import {getLibraries} from '../services/library.service.js'
+
   export default {
-    data: () => ({
-      valid: false,
-      title: '',
-      msg: '',
-      msgRules: [
-        v => !!v || 'Wiadomość jest wymagana',
-      ],
-      titleRules: [
-        v => !!v || 'Tytuł jest wymagany',
-      ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail jest wymagany',
-        v => /.+@.+/.test(v) || 'E-mail musi być poprawny',
-      ],
-    }),
+    setup(){
+        const libraries = ref([])
+        const loadLibraries = async () =>{
+            libraries.value = await getLibraries()
+        }
+
+        loadLibraries()
+
+        return {
+            libraries,
+        }
+    }
   }
 </script>
 
@@ -26,53 +25,106 @@
                 <router-link to="/">
                     <v-img
                         src="@/assets/img/logo-library.png"
-                        height="10rem"
+                        height="9rem"
                     ></v-img>
                 </router-link>
             </div>
-            <v-form class="form" v-model="valid">
-                <v-divider></v-divider>
-                <v-text-field
-                    v-model="email"
-                    label="E-mail"
-                    :rules="emailRules"
-                    maxlength="70"
-                    single-line
-                    full-width
-                    required
-                ></v-text-field>
-                <v-divider></v-divider>
-                <v-text-field
-                    v-model="title"
-                    label="Temat"
-                    :rules="titleRules"
-                    single-line
-                    full-width
-                    counter
-                    maxlength="30"
-                    required
-                ></v-text-field>
-                <v-divider></v-divider>
-                <v-textarea
-                    v-model="msg"
-                    :rules="msgRules"
-                    label="Wiadomość"
-                    counter
-                    maxlength="250"
-                    full-width
-                    required
-                ></v-textarea>
-                <div class="button">
-                    <v-btn
-                        class="btn"
-                        size="x-large"
-                        color="white"
-                        type="submit"
-                    >
-                        Wyślij
-                    </v-btn>
-                </div>
-            </v-form>
+            <v-container fluid>
+                <v-row>
+                    <v-col cols="12">
+                        <v-row class="font-size">
+                            <v-col>
+                                <v-icon
+                                    large
+                                    color="teal darken-2"
+                                    >
+                                    mdi-email
+                                </v-icon>
+                                <span  class="text">biblioteka@gmail.com</span>
+                            </v-col>
+                            <v-col>
+                                <v-icon
+                                    large
+                                    color="green darken-2"
+                                    >
+                                    mdi-domain
+                                </v-icon>
+                                <span  class="text">Rzeszów ul.Piłsudzkiego 13</span>
+                            </v-col>
+                            <v-col>
+                                <v-icon
+                                    large
+                                    color="orange darken-2"
+                                    >
+                                    mdi-phone-classic
+                                </v-icon>
+                                <span  class="text">
+                                    644-322-123
+                                </span>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-expansion-panels style="font-size: 1.3rem;">
+                             <v-expansion-panel
+                                v-for="library in libraries"
+                                :key="library"
+                                style="padding: 0.5rem;"
+                             >
+                                <v-expansion-panel-title>
+                                    <v-row no-gutters>
+                                        <v-col cols="4" class="d-flex justify-start" style="font-size: 1.5rem;">
+                                        Biblioteka: {{ library.city }}
+                                        </v-col>
+                                        <v-col
+                                        cols="8"
+                                        class="text-black"
+                                        >
+                                        </v-col>
+                                    </v-row>
+                                </v-expansion-panel-title>
+                                <v-expansion-panel-text>
+                                    <v-row >
+                                        <v-col>
+                                            <v-icon
+                                                large
+                                                color="teal darken-2"
+                                                >
+                                                mdi-email
+                                            </v-icon>
+                                            <span  class="text">
+                                                {{ library.email }}
+                                            </span>
+                                        </v-col>
+                                        <v-col>
+                                            <v-icon
+                                                large
+                                                color="green darken-2"
+                                                >
+                                                mdi-domain
+                                            </v-icon>
+                                            <span  class="text">
+                                              {{library.city + ' ' + library.postCode + '   ul.' + library.streetAndNumber}}
+                                            </span>
+                                        </v-col>
+                                        <v-col>
+                                            <v-icon
+                                                large
+                                                color="orange darken-2"
+                                                >
+                                                mdi-phone-classic
+                                            </v-icon>
+                                            <span  class="text">
+                                                {{ library.phoneNumber }}
+                                            </span>
+                                        </v-col>
+                                    </v-row>
+                                </v-expansion-panel-text>
+                            </v-expansion-panel>
+                        </v-expansion-panels>
+                    </v-col>
+                </v-row>
+            </v-container>
         </div>
     </div>
 </template>
@@ -80,6 +132,7 @@
 <style scoped>
 
 .imgBackgorund{
+    color: white;
     min-height: 100vh;
     height: 100%;
     background: url("@/assets/img/contactBackground.jpg");
@@ -89,23 +142,18 @@
     background-color:rgba(0, 0, 0, 0.6);
     min-height: 100vh;
     height: 100%;
-    padding: 5rem;
+    padding: 3rem;
 }
 .img{
     width: 15rem;
     margin: auto;
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
 }
 
-.form{
-    color: white;
+.font-size{
+    font-size: 2rem;
 }
-.button{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-}
-.btn{
-    padding: 3rem;
+.text{
+    padding: 0.5rem;
 }
 </style>

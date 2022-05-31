@@ -17,9 +17,7 @@ const getBookById = async (id) =>{
 }
 
 const addBook = async (book) =>{
-    await axios.post(`${API_URL}/book`, {
-        body: book
-    })  
+    await axios.post(`${API_URL}/book`, book)  
 }
 
 const deleteBookById = async (id) =>{
@@ -27,33 +25,7 @@ const deleteBookById = async (id) =>{
 }
 export {getBooks, getBookById, addBook, deleteBookById}
 
-// {
-//     id: 46,
-//     title: "Piotruś pan",
-//     author: [
-//         {
-//             id: 75,
-//             name: "Adam",
-//             lastName: "Jakiś"
-//         },
-//         {
-//             id: 74,
-//             name: "Ja",
-//             lastName: "Nieja"
-//         }
-//     ],
-//     publishmentYear: "2000",
-//     publishmentHouse: {
-//         id: 10,
-//         name: "Wydawnictwo"
-//     },
-//     category: {
-//         id: 12,
-//         name: "dramat"
-//     },
-//     description: "dsadasdasdsadsadasdasas",
-//     imgUrl: "dsadasdasdsadasdsa"
-// }
+
 
 
 
