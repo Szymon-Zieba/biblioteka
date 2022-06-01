@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>pl.goread</groupId>
+    <groupId>pl.goread.pdf</groupId>
     <artifactId>PDFGenerator</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -15,9 +15,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
-            <version>2.0.26</version>
+            <groupId>com.github.librepdf</groupId>
+            <artifactId>openpdf</artifactId>
+            <version>1.3.28</version>
         </dependency>
     </dependencies>
 
