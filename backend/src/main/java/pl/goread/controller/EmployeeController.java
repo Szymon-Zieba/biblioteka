@@ -1,6 +1,7 @@
 package pl.goread.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import pl.goread.model.Book;
@@ -20,6 +21,7 @@ public class EmployeeController
 {
     private final UserRepository userRepository;
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/employees")
     List<User> getEmployees(){
@@ -32,6 +34,9 @@ public class EmployeeController
     };
     @PostMapping("/employee")
     public User addEmployee(@RequestBody User user){
+
+        user.setPassword(passwordEncoder.encode(user.getPESEL()));
+
         return userService.addEmployee(user);
     };
     @DeleteMapping("/employee/{id}")
