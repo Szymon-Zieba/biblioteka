@@ -1,8 +1,27 @@
 <script>
+import { ref } from "vue";
+import {addEmployee} from "../services/employee.service"
+
 export default {
-  data() {
+  setup() {
+
+    const dialog = ref(false)
+
+    const employee = ref({
+      firstName: null,
+      pesel: null,
+      lastName: null,
+      city: null,
+      streetNumber: null,
+      email: null,
+      zip: null,
+      phoneNumber: null,
+    })
+  
     return {
-      dialog: false,
+      employee,
+      addEmployee,
+      dialog,
     };
   },
 };
@@ -20,40 +39,40 @@ export default {
         </v-card-title>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
-            v-model="firstName"
+            v-model="employee.firstName"
             label="Imie"
             required
           ></v-text-field>
 
           <v-text-field
-            v-model="lastName"
+            v-model="employee.lastName"
             label="Nazwisko"
             required
           ></v-text-field>
 
-          <v-text-field v-model="email" label="E-mail" required></v-text-field>
+          <v-text-field v-model="employee.email" label="E-mail" required></v-text-field>
 
           <v-text-field
-            v-model="phoneNumber"
+            v-model="employee.phoneNumber"
             label="Telefon"
             required
           ></v-text-field>
 
           <v-text-field
-            v-model="streetNumber"
+            v-model="employee.streetNumber"
             label="Adres"
             required
           ></v-text-field>
 
           <v-text-field
-            v-model="zip"
+            v-model="employee.zip"
             label="Kod pocztowy"
             required
           ></v-text-field>
 
-          <v-text-field v-model="city" label="Miasto" required></v-text-field>
+          <v-text-field v-model="employee.city" label="Miasto" required></v-text-field>
 
-          <v-text-field v-model="pesel" label="Pesel" required></v-text-field>
+          <v-text-field v-model="employee.pesel" label="Pesel" required></v-text-field>
 
           <v-checkbox
             v-model="checkbox"
@@ -66,7 +85,7 @@ export default {
           <v-spacer></v-spacer>
           <v-btn color="orange" text @click="dialog = false"> Reset </v-btn>
           <v-btn color="orange" text @click="dialog = false"> Wyjdź </v-btn>
-          <v-btn color="orange" text @click="dialog = false">
+          <v-btn color="orange" text @click="addEmployee(employee)">
             Zapisz pracownika
           </v-btn>
         </v-card-actions>

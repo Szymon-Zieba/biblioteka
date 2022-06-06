@@ -1,47 +1,30 @@
 <script>
 import AddEmployeePopup from "@/components/AddEmployeePopup.vue";
-import { ref, reactive, computed } from "vue";
+import { ref, computed } from "vue";
+import useEmployees from "../composables/useEmployees"
+import {deleteEmployeeById} from "../services/employee.service"
 export default {
   components: { AddEmployeePopup },
   setup() {
+
+    const {employees, loadEmployees} = useEmployees()
+    loadEmployees();
+    
     const showScheduleForm = false;
 
-    const clients = reactive([
-      {
-        name: "Asia",
-        lastName: "Asia",
-        phoneNumber: "213412123",
-        streetNumber: "Cicha 2",
-        zip: "35-202",
-        city: "Rzeszow",
-        pesel: "213412123",
-        email: "jatoty@gamil.com",
-        role: "EMPLOYEE",
-      },
-      {
-        name: "Asia",
-        lastName: "Asia",
-        phoneNumber: "213412123",
-        streetNumber: "Cicha 2",
-        zip: "35-202",
-        city: "aasdasdasdasdasdasdas",
-        pesel: "213412123",
-        email: "jatoty@gasssmil.com",
-        role: "EMPLOYEE",
-      },
-    ]);
     const search = ref("");
 
     const filteredList = computed(() => {
-      return clients.filter((client) =>
-        (client.name + client.lastName)
+      return employees.value.filter((employee) =>
+        (employee.name + employee.lastName)
           .toLowerCase()
           .includes(search.value.toLowerCase())
       );
     });
     return {
+      deleteEmployeeById,
+      employees,
       showScheduleForm,
-      clients,
       search,
       filteredList,
     };
@@ -75,18 +58,18 @@ export default {
       <tbody>
         <tr
           style="margin-top: 50px"
-          v-for="(client, index) in filteredList"
-          :key="client"
+          v-for="(employee) in filteredList"
+          :key="employee"
         >
-          <td>{{ index }}</td>
-          <td>{{ client.name }}</td>
-          <td>{{ client.lastName }}</td>
-          <td>{{ client.phoneNumber }}</td>
-          <td>{{ client.streetNumber }}</td>
-          <td>{{ client.zip }}</td>
-          <td>{{ client.city }}</td>
-          <td>{{ client.pesel }}</td>
-          <td><v-btn color="red">Usun</v-btn></td>
+          <td>{{ employee.id }}</td>
+          <td>{{ employee.firstName }}</td>
+          <td>{{ employee.lastName }}</td>
+          <td>{{ employee.phoneNumber }}</td>
+          <td>{{ employee.streetNumber }}</td>
+          <td>{{ employee.zip }}</td>
+          <td>{{ employee.city }}</td>
+          <td>{{ employee.pesel }}</td>
+          <td><v-btn @click="deleteEmployeeById(employee.id)" color="red">Usun</v-btn></td>
         </tr>
       </tbody>
     </v-table>

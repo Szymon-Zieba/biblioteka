@@ -40,7 +40,7 @@ public class User implements UserDetails {
 
     private String city;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
     public User(String email, String password) {
