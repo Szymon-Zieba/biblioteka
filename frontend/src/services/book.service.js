@@ -10,9 +10,9 @@ const getBooks = async () =>{
 
 const getBookById = async (id) =>{
     const response = await axios.get(`${API_URL}/book/${id}`)
-    const employee =  await response.data
+    const book=  await response.data
 
-    return employee
+    return book
 }
 
 const addBook = async (book) =>{

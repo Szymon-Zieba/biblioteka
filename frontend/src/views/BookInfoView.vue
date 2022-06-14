@@ -2,40 +2,23 @@
 import MainHeader from "@/components/MainHeader.vue";
 import MainFooter from "@/components/MainFooter.vue";
 import ReservationPopup from "@/components/ReservationPopup.vue";
+import useBooks from "../composables/useBooks.js";
+import { useRoute } from "vue-router";
 export default {
   components: { MainHeader, MainFooter, ReservationPopup },
   setup() {
-    const book = [
-      {
-        id: "1",
-        title: "zgredekdsadsadas dasdasdsadasdasdasdasdasd",
-        author: "J.K.Rowling",
-        genre: "Fantasy",
-        text: "Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygodyZnasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody vZnasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody Znasz już Harry`ego Pottera, młodego czarodzieja, który przeżywa coraz to nowe przygody",
-        img: "../../public/img/Harry_Potter_I_Więzień_Azkabanu.png",
-      },
-    ];
-    const libraries = [
-      {
-        id: "1",
-        city: "Rzeszów",
-        adress: "Ul.Cicha 56",
-        quantity: "10",
-      },
-      {
-        id: "2",
-        city: "Kraków",
-        adress: "Ul.Cicha 56",
-        quantity: "0",
-      },
-      {
-        id: "3",
-        city: "Wrocław",
-        adress: "Ul.Cicha 56",
-        quantity: "12",
-      },
-    ];
-    const items = ["Wroclaw", "Krakow", "Warszawa", "Cos"];
+    const route = useRoute();
+    const { book, loadBookById } = useBooks();
+
+    console.log(route.params);
+    loadBookById(route.params.id);
+
+    function authorNameLastName(authors) {
+      return authors
+        .map((author) => author.name + " " + author.lastName)
+        .join(", ");
+    }
+
     const selected = "0";
     const showScheduleForm = false;
     const isAvible = (quantity) => {
@@ -44,11 +27,10 @@ export default {
     };
 
     return {
+      authorNameLastName,
       book,
-      libraries,
       selected,
       isAvible,
-      items,
       showScheduleForm,
     };
   },
@@ -56,93 +38,85 @@ export default {
 </script>
 
 <template>
-  <div class="all">
-    <MainHeader />
-    <v-container fill-height class="container">
-      <v-row align="center" justify="center">
-        <v-col class="v-col-vimg">
-          <v-card class="vcard-height pa-2" outlined tile>
-            <v-img
-              src="../../public/img/books-product.jpg"
-              class="card-vimg"
-            ></v-img>
-          </v-card>
-        </v-col>
-        <v-col class="v-col-text">
-          <v-card class="vcard-height pa-2">
-            <div class="text-h4 mb-10">
-              {{ book[0].title }}
-            </div>
+  <MainHeader style="background: #795548" />
 
-            <div class="mb-7 text-h5">
-              {{ book[0].author }}
-            </div>
+  <div v-if="book" class="container">
+    <img :src="`/${book.imgUrl}`" class="book-img" />
 
-            <div class="mb-7 text-h5">
-              {{ book[0].genre }}
-            </div>
-
-            <v-card-text style="font-size: 0.9rem">
-              {{ book[0].text }}
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col>
-          <v-card class="vcard-height pa-2 vcard-buttons" outlined tile>
-            <div class="mt-15">
-              <v-col cols="12" class="mb-7">
-                <v-select
-                  :items="items"
-                  :menu-props="{ top: true, offsetY: true }"
-                  label="Wybierz Bibliotekę"
-                ></v-select>
-              </v-col>
-              <ReservationPopup v-model="showScheduleForm" />
-              <div class="text-h5 mt-16">12 dostepnych w tej bibliotece</div>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-    <MainFooter />
+    <div class="book-details">
+      <div class="book-title">{{ book.title }}</div>
+      <div class="book-author">{{ authorNameLastName(book.author || []) }}</div>
+      <div class="book-genre">{{ book.category.name }}</div>
+      <div class="book-description">{{ book.description }}</div>
+      <div class="book-localization">Lokalizacja : {{ book.library.city }}</div>
+      <div class="book-reservation">
+        <ReservationPopup
+          v-model="showScheduleForm"
+          :bookId="book.id"
+        ></ReservationPopup>
+      </div>
+    </div>
   </div>
+
+  <MainFooter />
 </template>
 
 <style scoped>
-.all {
-  background-image: url("../../public/img/books-background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 .container {
-  padding-top: 6rem !important;
-  padding: 1rem;
-}
-.v-row {
-  padding: 2rem;
-  box-shadow: 0 0 5rem black;
-}
-.v-col {
-  padding: 1rem;
-}
-.v-col-text {
-  text-align: center;
-}
-.vcard-height {
-  height: 100%;
-  min-height: 70vh;
-  background-color: burlywood;
-  text-align: center;
-}
-.card-vimg {
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 25rem;
-  margin: 6rem 10%;
-  min-width: 8rem;
+  position: relative;
+  width: 100vw;
+  background: #efebe9;
+  display: flex;
+  padding-top: 8rem;
+  padding-bottom: 2rem;
+  justify-content: center;
+  flex-direction: row;
 }
 
-.vcard-height-cos {
+.book-img {
   width: 30rem;
+  height: 75vh;
+}
+
+.book-details {
+  overflow-wrap: break-word;
+  white-space: pre-line;
+  background-color: #efebe9;
+  flex-direction: column;
+  display: flex;
+  width: 60rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: white;
+  height: 75vh;
+}
+
+.book-details * {
+  margin-left: 20px;
+}
+
+.book-genre {
+  font-weight: bold;
+}
+
+.book-author {
+  margin-top: 20px;
+  font-size: 1.5rem;
+}
+.book-title {
+  font-size: 2.5rem;
+}
+.book-localization {
+  margin-top: 20px;
+}
+
+.book-description {
+  margin-top: 20px;
+}
+
+.book-reservation {
+  position: absolute;
+  bottom: 0;
+  left: 56.5%;
 }
 </style>
