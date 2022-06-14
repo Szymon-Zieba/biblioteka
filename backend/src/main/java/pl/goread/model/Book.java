@@ -36,4 +36,7 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private DemandBookStatus status;
 
+    @OneToOne
+    private Library library;
+
 }
