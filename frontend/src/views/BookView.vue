@@ -12,13 +12,13 @@ export default {
 
     const search = ref("");
 
-
     const filteredList = computed(() => {
-      return books.value.filter((book) =>
-        (book.title + book.genre)
-          .toLowerCase()
-          .includes(search.value.toLowerCase()) &&
-       book.status === "IN_STOCK") 
+      return books.value.filter(
+        (book) =>
+          (book.title + book.genre)
+            .toLowerCase()
+            .includes(search.value.toLowerCase()) && book.status === "IN_STOCK"
+      );
     });
 
     return {
@@ -52,7 +52,7 @@ export default {
           xs="6"
         >
           <v-card elevation="1" class="book-card">
-            <router-link to="/book">
+            <router-link :to="`/book/${book.id}`">
               <v-img class="book-img" cover :src="book.imgUrl">
                 <div class="book-img-overlay">
                   <span class="book-img-overlay-button">Szczegóły</span>
@@ -68,7 +68,10 @@ export default {
             </v-card-subtitle>
             <v-card-text class="text-caption"> {{ book.text }} </v-card-text>
             <v-card-actions style="justify-content: end">
-              <v-btn to="/book" size="small" append-icon="mdi-chevron-right"
+              <v-btn
+                :to="`/book/${book.id}`"
+                size="small"
+                append-icon="mdi-chevron-right"
                 >Szczegóły</v-btn
               >
             </v-card-actions>
