@@ -15,19 +15,19 @@ const addHire = async (hire) =>{
     })  
 }
 
-const getHireByUserId = async (id) =>{
-    const response = await axios.get(`${API_URL}/hire/user/${id}`)
-    const hire =  await response.data;
+const getHiresByUserId = async (id) =>{
+    const response = await axios.get(`${API_URL}/hires/user/${id}`)
+    const hires =  await response.data;
 
-    return hire;
+    return hires;
 }
 
-const getHireByLibraryId = async (id) =>{
-    const response = await axios.get(`${API_URL}/hire/library/${id}`)
-    const hire =  await response.data;
+const getHiresByLibraryId = async (id) =>{
+    const response = await axios.get(`${API_URL}/hires/library/${id}`)
+    const hires =  await response.data;
 
-    return hire;
+    return hires;
 }
 
-export {getHireById, addHire, getHireByUserId , getHireByLibraryId }
+export {getHireById, addHire, getHiresByUserId , getHiresByLibraryId }
 

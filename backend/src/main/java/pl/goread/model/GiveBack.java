@@ -13,10 +13,10 @@ public class GiveBack {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     private Hire hire;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private User employee;
 
     private LocalDateTime returnDate;

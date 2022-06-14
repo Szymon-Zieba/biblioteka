@@ -1,38 +1,36 @@
 <script>
+import useHires from '../composables/useHires.js';
+import useGiveBacks from '../composables/useGiveBacks.js';
 
 export default {
   setup() {
-    const books = ([
-        {
-            id: 1,
-            title: 'Harry Potter - TOM 1',
-            author: 'J.K.Rowling',
-            genre: 'Fantasy',
-            date_borrow: "01/01/2022",
-            date_borrow_end: "01/05/2022",  
-            date_return: "26/04/2022",      
-        },
-        {
-            id: 2,
-            title: 'Harry Potter - TOM 2',
-            author: 'J.K.Rowling2',
-            genre: 'Fantasy2',
-            date_borrow: "01/01/2022",
-            date_borrow_end: "30/04/2022",    
-        },
-        {
-            id: 3,
-            title: 'Harry Potter - TOM 3',
-            author: 'J.K.Rowling3',
-            genre: 'Fantasy3',
-            date_borrow: "01/01/2022",
-            date_borrow_end: "10/01/2022",    
-            
-        },
-      ]);
+    const {hires, loadHires} = useHires();
+    loadHires().then(()=>{console.log(hires.value[0].id)});
+
+    const {giveBacks, loadGiveBacks} = useGiveBacks();
+    loadGiveBacks();
+
+    console.log(giveBacks);
+
+
+    const isOverDate=(d1)=>{
+      const today = new Date();
+      const dateBorrow = new Date(d1);
+      const diffTime = Math.abs(today - dateBorrow);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+
+      // if(diffDays>14){
+      //   return true;
+      // }
+      // return false;
+      return diffDays;
+    }
+    
 
     return { 
-      books,
+      hires,
+      giveBacks,
+      isOverDate,
     }
   },
 };
@@ -43,36 +41,63 @@ export default {
     <v-container class="text-center">
       
         <div class="text-subtitle-2 mb-2">Twoje wypożyczone książki</div>
-        <v-expansion-panels style="margin: auto; max-width: 1000px !important;">
-            <v-expansion-panel v-for="book in books" :key="book.id">
+        <v-expansion-panels v-if="hires" style="margin: auto; max-width: 1000px !important;">
+            <v-expansion-panel v-for="hire in hires" :key="hire.id">
                 <v-expansion-panel-title disable-icon-rotate>
-                (id: {{book.id}}) {{book.title}}
+                (id: {{hire.id}}) {{hire.books[0].title}}
                 <template v-slot:actions>
 
-                    <div v-if="book.id==1">
-                        <div class="ended">Książka oddana.<br>Termin zwrotu: {{book.date_borrow_end}}</div>
+                    <div v-if="hire.status=='NOT_AVAILABLE'">
+                        <div class="ended">Książka zwrócona.</div> 
                     </div>
-                    <div v-else-if="book.id==2">
-                        <div class="borrowed">Książka wypożyczona.<br>Termin zwrotu: {{book.date_borrow_end}}</div>
+
+                    <div v-else-if="isOverDate(hire.hireDate.split('T')[0])>14">
+                        <div class="after_deadline">Książka po terminie wypozyczenia.<br>Oddaj ją do biblioteki!<br>{{isOverDate(hire.hireDate.split('T')[0])-14}} dni po terminie!</div>
+                    </div> 
+
+                    <div v-else-if="hire.status=='HIRED'">
+                        <div class="borrowed">Książka wypożyczona.<br>Pozostało do zwrotu: {{14-isOverDate(hire.hireDate.split('T')[0])}} dni </div>
                     </div>
-                    <div v-else-if="book.id==3">
-                        <div class="after_deadline">Książka po terminie wypozyczenia.<br>Termin zwrotu: {{book.date_borrow_end}}</div>
-                    </div>
+
+                    
+
+                    
+                    
+                       
                 </template>
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
-                    <div style="font-weight: 900; font-size: 24px">{{book.title}}</div>
+                    <div style="font-weight: 900; font-size: 24px">{{hire.books[0].title}}</div>
                     
-                    Autor książki: {{book.author}}
+                    Autorzy:
+                    <div v-for="author in hire.books[0].author" :key="author.id">
+                      {{author.name+" "+author.lastName}}
+                    </div>
+                    
                     <br>
-                    Gatunek książki: {{book.genre}}
+                    Wydawnictwo książki: {{hire.books[0].publishmentHouse.name}}
                     <br> <br>
-                    Książkę wypożyczono {{book.date_borrow}}r.
+                    Książkę wypożyczono {{hire.hireDate.split("T")[0]+" "+hire.hireDate.split("T")[1]}}
                     <br>
-                    Książka wypożyczona do {{book.date_borrow_end}}r.
-                    <br>
-                    <div v-if="book.date_return">
-                        Książkę zwrócono dnia {{book.date_return}}r.
+                    
+                    <div v-if="hire.status=='HIRED' && 14-isOverDate(hire.hireDate.split('T')[0])>0">
+                      Pozostało do zwrotu: {{14-isOverDate(hire.hireDate.split('T')[0])}} dni
+                    </div> 
+                    <div v-else-if="hire.status=='HIRED' && 14-isOverDate(hire.hireDate.split('T')[0])<0">
+                      Książka po terminie wypożyczenia!
+                    </div>
+                    <div v-if="hire.status=='NOT_AVAILABLE' && giveBacks">
+                    
+
+
+                      
+                      <span v-for="giveback in giveBacks" :key="giveback.id">
+                        <div v-if="giveback.hire.id==hire.id">
+                          Książkę zwrócono {{giveback.returnDate.split("T")[0]+" "+giveback.returnDate.split("T")[1]}} 
+                        </div>
+                      </span>
+                      
+                      
                     </div>
                     
                 </v-expansion-panel-text>

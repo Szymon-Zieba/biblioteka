@@ -1,6 +1,7 @@
 package pl.goread.model;
 
 import lombok.Data;
+import pl.goread.model.enums.DemandBookStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,4 +26,7 @@ public class Hire {
     private Library library;
 
     private LocalDateTime hireDate;
+
+    @Enumerated(EnumType.STRING)
+    private DemandBookStatus status;
 }
