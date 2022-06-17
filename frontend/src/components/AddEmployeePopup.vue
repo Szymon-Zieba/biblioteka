@@ -74,12 +74,6 @@ export default {
 
           <v-text-field v-model="employee.pesel" label="Pesel" required></v-text-field>
 
-          <v-checkbox
-            v-model="checkbox"
-            :rules="[(v) => !!v || 'You must agree to continue!']"
-            label="Potwierdz, aby zapisać"
-            required
-          ></v-checkbox>
         </v-form>
         <v-card-actions class="mt-16">
           <v-spacer></v-spacer>

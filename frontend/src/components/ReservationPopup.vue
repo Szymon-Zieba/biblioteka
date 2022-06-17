@@ -26,7 +26,7 @@ export default {
   <v-row justify="center" class="mb-15" style="box-shadow: 0 0 0 black">
     <v-dialog v-model="dialog" persistent>
       <template v-slot:activator="{ props }">
-        <v-btn class="pa-7" v-bind="props"> {{ bookId }}</v-btn>
+        <v-btn class="pa-7" v-bind="props"> Zarezerwuj </v-btn>
       </template>
       <v-card class="pa-15">
         <v-card-title class="text-h5">

@@ -58,7 +58,7 @@ props: ["role"],
           <th class="text-left">Wydawnictwo</th>
           <th class="text-left">Kategoria</th>
           <th class="text-left">Opis</th>
-          <th class="text-left">Zdjęcie</th>
+          <th class="text-left"></th>
         </tr>
       </thead>
       <tbody>
@@ -74,7 +74,7 @@ props: ["role"],
           <td>{{ demand.publishmentHouse.name }}</td>
           <td>{{ demand.category.name }}</td>
           <td>{{ demand.description.substring(0,20) + '...' }}</td>
-          <td><img :src="demand.imgUrl"></td>
+          <td><img style="width:130px" :src="demand.imgUrl"></td>
           <td v-if="role === `ROLE_HEADADMIN` || role === `ROLE_ADMIN`"><v-btn class="button" @click="updateBookFunction(demand.id, statusDelete)" color="red">Usun</v-btn></td>
           <td v-if="role === `ROLE_HEADADMIN`"><v-btn class="button" @click="updateBookFunction(demand.id, statusAdd)" color="blue">Dodaj</v-btn></td>
         </tr>
@@ -88,6 +88,12 @@ props: ["role"],
 </template>
 
 <style scoped>
+
+  .img{
+    width:100px;
+    height:100px;
+  }
+
   .main {
     padding: 2rem;
     max-width: 90%;
