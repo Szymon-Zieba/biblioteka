@@ -60,8 +60,12 @@ export default {
               </v-img>
             </router-link>
             <v-card-title> {{ book.title }} </v-card-title>
-            <v-card-subtitle class="text-subtitle-1">
-              {{ book.author }}
+            <v-card-subtitle
+              v-for="author in book.author"
+              :key="author"
+              class="text-subtitle-1"
+            >
+              {{ author.name + " " + author.lastName }}
             </v-card-subtitle>
             <v-card-subtitle class="text-subtitle-2 mt-2">
               Gatunek: {{ book.genre }}
