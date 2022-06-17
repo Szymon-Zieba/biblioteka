@@ -16,6 +16,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     private String title;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -29,6 +30,7 @@ public class Book {
     @ManyToOne()
     private Category category;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String imgUrl;
