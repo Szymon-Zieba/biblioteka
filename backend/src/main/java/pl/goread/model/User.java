@@ -43,6 +43,8 @@ public class User implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
+    private boolean enabled = true;
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;
@@ -78,9 +80,8 @@ public class User implements UserDetails {
         return true;
     }
 
-    @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled ;
     }
 }
