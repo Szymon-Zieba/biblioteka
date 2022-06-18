@@ -30,7 +30,7 @@ export default {
     };
 
     const user = {
-      role: "ROLE_HEADADMIN",
+      role: JSON.parse(localStorage.getItem("user")).role.name
     };
 
     return {
