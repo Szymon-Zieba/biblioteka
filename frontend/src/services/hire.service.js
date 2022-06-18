@@ -15,6 +15,15 @@ const addHire = async (hire) =>{
     })  
 }
 
+const addHireManual = async (user, status, todayDate, library) =>{
+    await axios.post(`${API_URL}/hire`, {
+        user:user,
+        status:status,
+        hireDate:todayDate,
+        library:library
+    })  
+}
+
 const getHiresByUserId = async (id) =>{
     const response = await axios.get(`${API_URL}/hires/user/${id}`)
     const hires =  await response.data;
@@ -29,5 +38,5 @@ const getHiresByLibraryId = async (id) =>{
     return hires;
 }
 
-export {getHireById, addHire, getHiresByUserId , getHiresByLibraryId }
+export {getHireById, addHire, addHireManual, getHiresByUserId , getHiresByLibraryId }
 

@@ -1,6 +1,8 @@
 <script>
 import { ref } from "vue";
 import { updateBook } from "../services/book.service.js";
+import { addHireManual } from '@/services/hire.service.js';
+import { useAuth } from "../store/auth";
 
 export default {
   props: {
@@ -11,8 +13,22 @@ export default {
     const dialog = ref(false);
     const reserveBook = (id, status) => {
       updateBook(id, status);
+
+      const auth = useAuth(); 
+
+      var today = new Date();
+      // DATA + 2 GODZINY!
+
+      // var library = auth.
+      // DODAĆ LIBRARY DLA USERA!
+      
+
+      addHireManual(auth.user, "RESERVED", today); // ,library_id
+
       dialog.value = false;
     };
+
+    
 
     return {
       dialog,
