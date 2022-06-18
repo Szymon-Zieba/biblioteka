@@ -39,6 +39,11 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/user/{pesel}")
+    public User getUserByPesel(@PathVariable String pesel){
+        return userRepository.findUserByPESEL(pesel);
+    }
+
     @PutMapping("/user/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         updatedUser.setPassword(userService.getUserById(id).getPassword());
