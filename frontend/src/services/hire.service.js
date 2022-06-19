@@ -2,41 +2,44 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8083";
 
-const getHireById = async (id) =>{
-    const response = await axios.get(`${API_URL}/hire/${id}`)
-    const hire =  await response.data;
+const getHireById = async (id) => {
+  const response = await axios.get(`${API_URL}/hire/${id}`);
+  const hire = await response.data;
 
-    return hire;
-}
+  return hire;
+};
 
-const addHire = async (hire) =>{
-    await axios.post(`${API_URL}/hire`, {
-        body: hire
-    })  
-}
+const getHiresByUserPesel = async (pesel) => {
+  const response = await axios.get(`${API_URL}/user?pesel=${pesel}`);
+  const user = await response.data;
 
-const addHireManual = async (user, status, todayDate, library) =>{
-    await axios.post(`${API_URL}/hire`, {
-        user:user,
-        status:status,
-        hireDate:todayDate,
-        library:library
-    })  
-}
+  const userHires = await getHiresByUserId(user.id);
 
-const getHiresByUserId = async (id) =>{
-    const response = await axios.get(`${API_URL}/hires/user/${id}`)
-    const hires =  await response.data;
+  return userHires;
+};
 
-    return hires;
-}
+const addHire = async (hire) => {
+  await axios.post(`${API_URL}/hire`, hire);
+};
 
-const getHiresByLibraryId = async (id) =>{
-    const response = await axios.get(`${API_URL}/hires/library/${id}`)
-    const hires =  await response.data;
+const getHiresByUserId = async (id) => {
+  const response = await axios.get(`${API_URL}/hires/user/${id}`);
+  const hires = await response.data;
 
-    return hires;
-}
+  return hires;
+};
 
-export {getHireById, addHire, addHireManual, getHiresByUserId , getHiresByLibraryId }
+const getHiresByLibraryId = async (id) => {
+  const response = await axios.get(`${API_URL}/hires/library/${id}`);
+  const hires = await response.data;
 
+  return hires;
+};
+
+export {
+  getHireById,
+  addHire,
+  getHiresByUserId,
+  getHiresByLibraryId,
+  getHiresByUserPesel,
+};

@@ -1,32 +1,33 @@
 <script>
 import { ref } from "vue";
-import { updateBook } from "../services/book.service.js";
-import { addHireManual } from '@/services/hire.service.js';
-import { useAuth } from "../store/auth";
+//import { updateBook} from "../services/book.service.js";
+import { addHire} from "../services/hire.service.js";
+import moment from "moment"
 
 export default {
   props: {
     bookId: Number,
+    libraryId: Number,
+    userId: Number,
   },
+  
+  setup(props) {
 
-  setup() {
+  console.log(props.bookId,props.libraryId,props.userId)
+    
+
     const dialog = ref(false);
-    const reserveBook = (id, status) => {
-      updateBook(id, status);
-
-      const auth = useAuth(); 
-
-      var today = new Date();
-      // DATA + 2 GODZINY!
-
-      // var library = auth.
-      // DODAĆ LIBRARY DLA USERA!
-      
-
-      addHireManual(auth.user, "RESERVED", today); // ,library_id
-
+    const reserveBook = (bookId, libraryId, userId) => {
+      addHire({
+        book: {id:bookId},
+        library: {id:libraryId},
+        user: {id:userId},
+        hireDate: moment().format("YYYY-MM-DD HH:mm:ss"),
+        status: "RESERVED"
+      });
       dialog.value = false;
     };
+ 
 
     
 
@@ -57,7 +58,7 @@ export default {
         >
         <v-card-actions class="mt-16">
           <v-spacer></v-spacer>
-          <v-btn color="orange" text @click="reserveBook(bookId, 'RESERVED')">
+          <v-btn color="orange" text @click="reserveBook(bookId,libraryId,userId)">
             Rezerwuj
           </v-btn>
           <v-btn color="orange" text @click="dialog = false">

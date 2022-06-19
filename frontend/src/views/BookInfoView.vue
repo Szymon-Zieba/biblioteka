@@ -4,9 +4,14 @@ import MainFooter from "@/components/MainFooter.vue";
 import ReservationPopup from "@/components/ReservationPopup.vue";
 import useBooks from "../composables/useBooks.js";
 import { useRoute } from "vue-router";
+import { useAuth } from "../store/auth";
 export default {
   components: { MainHeader, MainFooter, ReservationPopup },
   setup() {
+
+     const auth = useAuth();
+     const id = auth.user.id;
+
     const route = useRoute();
     const { book, loadBookById } = useBooks();
 
@@ -27,6 +32,7 @@ export default {
     };
 
     return {
+      id,
       authorNameLastName,
       book,
       selected,
@@ -53,6 +59,8 @@ export default {
         <ReservationPopup
           v-model="showScheduleForm"
           :bookId="book.id"
+          :libraryId="book.library.id"
+          :userId="id"   
         ></ReservationPopup>
       </div>
     </div>
