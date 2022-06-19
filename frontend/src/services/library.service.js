@@ -9,6 +9,13 @@ const getLibraries = async () => {
   return libraries;
 };
 
+const getLibrariesUser = async (id) => {
+  const response = await axios.get(`${API_URL}/libraries/user/${id}`);
+  const librariesUser = await response.data;
+
+  return librariesUser[0] ?? null;
+};
+
 const addLibrary = (library) => {
   axios.post(`${API_URL}/library`, {
     city: library.city,
@@ -23,4 +30,4 @@ const deleteLibraryById = (id) => {
   axios.delete(`${API_URL}/library/${id}`);
 };
 
-export { getLibraries, addLibrary, deleteLibraryById };
+export { getLibraries, addLibrary, deleteLibraryById, getLibrariesUser };
