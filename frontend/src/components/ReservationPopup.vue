@@ -1,6 +1,6 @@
 <script>
 import { ref } from "vue";
-//import { updateBook} from "../services/book.service.js";
+import { updateBook} from "../services/book.service.js";
 import { addHire} from "../services/hire.service.js";
 import moment from "moment"
 
@@ -25,6 +25,8 @@ export default {
         hireDate: moment().format("YYYY-MM-DD HH:mm:ss"),
         status: "RESERVED"
       });
+      updateBook(props.bookId, "RESERVED")
+
       dialog.value = false;
     };
  

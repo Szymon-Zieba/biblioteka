@@ -39,11 +39,11 @@ export default {
                 <template v-slot:actions>
                   
 
-                    <div v-if="hire.status=='NOT_AVAILABLE'">
+                    <div v-if="hire.status=='RETURNED'">
                         <div class="ended">Książka zwrócona.</div> 
                     </div>
 
-                    <div v-else-if="isOverDate(hire.hireDate.split('T')[0])>14">
+                    <div v-else-if="isOverDate(hire.hireDate.split('T')[0])>14 && hire.status=='DELAYED'">
                         <div class="after_deadline">Książka po terminie wypozyczenia.<br>Oddaj ją do biblioteki!<br>{{isOverDate(hire.hireDate.split('T')[0])-14}} dni po terminie!</div>
                     </div> 
 
@@ -54,6 +54,10 @@ export default {
                     <div v-else-if="hire.status=='RESERVED'">
                         <div class="reserved">Wysłano prośbę o wypożyczenie.<br>Pozostało do rozpatrzenia prośby: {{7-isOverDate(hire.hireDate.split('T')[0])}} dni </div>
                     </div>
+                     <div v-else-if="hire.status=='CANCELED'">
+                        <div class="canceled">Anulowano rezerwacje</div>
+                    </div>
+                    
                       
                 </template>
                 </v-expansion-panel-title>
@@ -82,7 +86,7 @@ export default {
                     <div v-else-if="hire.status=='HIRED' && 14-isOverDate(hire.hireDate.split('T')[0])<0">
                       Książka po terminie wypożyczenia!
                     </div>
-                    <div v-if="hire.status=='NOT_AVAILABLE' && giveBacks">
+                    <div v-if="hire.status=='RETURNED' && giveBacks">
 
                       <span v-for="giveback in giveBacks" :key="giveback.id">
                         <div v-if="giveback.hire.id==hire.id">

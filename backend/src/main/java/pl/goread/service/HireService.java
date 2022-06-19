@@ -3,6 +3,7 @@ package pl.goread.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.goread.model.*;
+import pl.goread.model.enums.DemandBookStatus;
 import pl.goread.repository.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -43,5 +44,15 @@ public class HireService {
 
     public List<Hire> getHiresByLibraryId(Long id) {
         return HireRepository.getHiresByLibrary(libraryService.getLibraryById(id));
+    }
+
+    public void updateHire(Long id, String status){
+        Hire hire = HireRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND_MSG));
+        System.out.println(HireRepository.findById(id));
+        hire.setStatus(DemandBookStatus.valueOf(status));
+        System.out.println(hire.getStatus());
+
+        HireRepository.save(hire);
     }
 }
