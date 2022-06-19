@@ -5,28 +5,19 @@ import useGiveBacks from '../composables/useGiveBacks.js';
 export default {
   setup() {
     const {hires, loadHires} = useHires();
-    loadHires().then(()=>{console.log(hires.value[0].id)});
+    loadHires();
 
     const {giveBacks, loadGiveBacks} = useGiveBacks();
     loadGiveBacks();
-
-    console.log(giveBacks);
-
 
     const isOverDate=(d1)=>{
       const today = new Date();
       const dateBorrow = new Date(d1);
       const diffTime = Math.abs(today - dateBorrow);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-
-      // if(diffDays>14){
-      //   return true;
-      // }
-      // return false;
       return diffDays;
     }
     
-
     return { 
       hires,
       giveBacks,
@@ -46,6 +37,7 @@ export default {
                 <v-expansion-panel-title disable-icon-rotate>
                 (id: {{hire.id}}) {{hire.book.title}}
                 <template v-slot:actions>
+                  
 
                     <div v-if="hire.status=='NOT_AVAILABLE'">
                         <div class="ended">Książka zwrócona.</div> 
@@ -58,7 +50,11 @@ export default {
                     <div v-else-if="hire.status=='HIRED'">
                         <div class="borrowed">Książka wypożyczona.<br>Pozostało do zwrotu: {{14-isOverDate(hire.hireDate.split('T')[0])}} dni </div>
                     </div>
-                     
+
+                    <div v-else-if="hire.status=='RESERVED'">
+                        <div class="reserved">Wysłano prośbę o wypożyczenie.<br>Pozostało do rozpatrzenia prośby: {{7-isOverDate(hire.hireDate.split('T')[0])}} dni </div>
+                    </div>
+                      
                 </template>
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
@@ -72,7 +68,12 @@ export default {
                     <br>
                     Wydawnictwo książki: {{hire.book.publishmentHouse.name}}
                     <br> <br>
-                    Książkę wypożyczono {{hire.hireDate.split("T")[0]}}
+                    <div v-if="hire.status=='RESERVED'">
+                      Książkę zarezerwowano {{hire.hireDate.split("T")[0]}}
+                    </div> 
+                    <div v-else>
+                      Książkę wypożyczono {{hire.hireDate.split("T")[0]}}
+                    </div> 
                     <br>
                     
                     <div v-if="hire.status=='HIRED' && 14-isOverDate(hire.hireDate.split('T')[0])>0">
@@ -82,25 +83,17 @@ export default {
                       Książka po terminie wypożyczenia!
                     </div>
                     <div v-if="hire.status=='NOT_AVAILABLE' && giveBacks">
-                    
 
-
-                      
                       <span v-for="giveback in giveBacks" :key="giveback.id">
                         <div v-if="giveback.hire.id==hire.id">
                           Książkę zwrócono {{giveback.returnDate.split("T")[0]+" "+giveback.returnDate.split("T")[1]}} 
                         </div>
                       </span>
-                      
-                      
                     </div>
-                    
                 </v-expansion-panel-text>
             </v-expansion-panel>
         </v-expansion-panels>
-      
     </v-container>
-  
 </template>
 
 <style scoped>
@@ -113,5 +106,8 @@ export default {
 .after_deadline {
   color: red;
   font-weight: 900;
+}
+.reserved {
+  color: rgb(51, 102, 255);
 }
 </style>
