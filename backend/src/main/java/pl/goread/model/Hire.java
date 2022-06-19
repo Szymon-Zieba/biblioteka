@@ -1,5 +1,6 @@
 package pl.goread.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import pl.goread.model.enums.DemandBookStatus;
 
@@ -16,8 +17,8 @@ public class Hire {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private Set<Book> books;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Book book;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
@@ -25,6 +26,7 @@ public class Hire {
     @ManyToOne(fetch = FetchType.EAGER)
     private Library library;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime hireDate;
 
     @Enumerated(EnumType.STRING)

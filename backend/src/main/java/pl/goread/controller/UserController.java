@@ -39,8 +39,8 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/user/{pesel}")
-    public User getUserByPesel(@PathVariable String pesel){
+    @GetMapping("/user")
+    public User getUserByPesel(@RequestParam String pesel){
         return userRepository.findUserByPESEL(pesel);
     }
 
