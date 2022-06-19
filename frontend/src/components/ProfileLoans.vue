@@ -44,7 +44,7 @@ export default {
         <v-expansion-panels v-if="hires" style="margin: auto; max-width: 1000px !important;">
             <v-expansion-panel v-for="hire in hires" :key="hire.id">
                 <v-expansion-panel-title disable-icon-rotate>
-                (id: {{hire.id}}) {{hire.books[0].title}}
+                (id: {{hire.id}}) {{hire.book.title}}
                 <template v-slot:actions>
 
                     <div v-if="hire.status=='NOT_AVAILABLE'">
@@ -58,26 +58,21 @@ export default {
                     <div v-else-if="hire.status=='HIRED'">
                         <div class="borrowed">Książka wypożyczona.<br>Pozostało do zwrotu: {{14-isOverDate(hire.hireDate.split('T')[0])}} dni </div>
                     </div>
-
-                    
-
-                    
-                    
-                       
+                     
                 </template>
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
-                    <div style="font-weight: 900; font-size: 24px">{{hire.books[0].title}}</div>
+                    <div style="font-weight: 900; font-size: 24px">{{hire.book.title}}</div>
                     
                     Autorzy:
-                    <div v-for="author in hire.books[0].author" :key="author.id">
+                    <div v-for="author in hire.book.author" :key="author.id">
                       {{author.name+" "+author.lastName}}
                     </div>
                     
                     <br>
-                    Wydawnictwo książki: {{hire.books[0].publishmentHouse.name}}
+                    Wydawnictwo książki: {{hire.book.publishmentHouse.name}}
                     <br> <br>
-                    Książkę wypożyczono {{hire.hireDate.split("T")[0]+" "+hire.hireDate.split("T")[1]}}
+                    Książkę wypożyczono {{hire.hireDate.split("T")[0]}}
                     <br>
                     
                     <div v-if="hire.status=='HIRED' && 14-isOverDate(hire.hireDate.split('T')[0])>0">
