@@ -1,7 +1,7 @@
 package pl.goread.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
 import pl.goread.model.enums.DemandBookStatus;
 
 import javax.persistence.*;
@@ -38,7 +38,7 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private DemandBookStatus status;
 
-    @OneToOne
+    @ManyToOne()
     private Library library;
 
 }

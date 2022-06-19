@@ -3,7 +3,9 @@ package pl.goread.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.goread.model.Library;
+import pl.goread.model.User;
 import pl.goread.repository.LibraryRepository;
+import pl.goread.service.LibraryService;
 
 import java.util.List;
 
@@ -16,6 +18,11 @@ public class LibraryController {
     @GetMapping("/libraries")
     public List<Library> getLibraries(){
         return libraryRepository.findAll();
+    }
+
+    @GetMapping("/libraries/user/{id}")
+    public List<Library> getLibrariesUser(@PathVariable Long id){
+        return libraryRepository.getLibrariesUser(id);
     }
 
     @PostMapping("/library")

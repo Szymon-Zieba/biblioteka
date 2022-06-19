@@ -21,4 +21,5 @@ public class LibraryService {
         return libraryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(LIBRARY_NOT_FOUND_MSG));
     }
+
 }

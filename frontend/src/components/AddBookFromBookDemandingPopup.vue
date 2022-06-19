@@ -1,6 +1,9 @@
 <script>
 import {ref, reactive} from 'vue'
 import { addBook } from '../services/book.service.js'
+import useLibraries from "../composables/useLibriaries"
+import { useAuth } from '../store/auth.js'
+
 export default {
   props: ["role"],
   setup(){
@@ -10,6 +13,7 @@ export default {
     let imgFile = ref([])
     let snackbar = ref(false)
 
+    let library = ref(null)
     let book = reactive({
       title: "",
       author: [
@@ -28,20 +32,27 @@ export default {
       description: "",
     })
 
+    const { libraries, loadLibraries } = useLibraries()
+    loadLibraries()
+
+    const auth = useAuth()
+
     const submitFormHeadAdmin = () => {
       form.value.validate().then((call) => {
         if(call.valid){
-          addBook({...book, imgUrl: imgFile.value[0].name, status: "IN_STOCK"} )
+          addBook({...book, imgUrl: imgFile.value[0].name, library: {id: library.value}, status: "IN_STOCK"} )
           dialog.value = false
           snackbar.value = true
         }
       })    
     }
 
+
+
     const submitFormEmployee = () => {
       form.value.validate().then((call) => {
         if(call.valid){
-          addBook({...book, imgUrl: imgFile.value[0].name, status: "IN_DEMAND"} )
+          addBook({...book, imgUrl: imgFile.value[0].name, library: {id: auth.user.libraryId}, status: "IN_DEMAND", } )
           dialog.value = false
           snackbar.value = true
         }
@@ -70,12 +81,14 @@ export default {
       addInput,
       removeInput,
       book,
+      library,
       submitFormEmployee,
       submitFormHeadAdmin,
       valid,
       form,
       imgFile,
-      snackbar
+      snackbar,
+      libraries
     }
   }  
 };
@@ -147,6 +160,14 @@ export default {
             label="Zdjęcie"
             :rules="[v => !!v || 'Zdjęcie jest wymagane']"
           ></v-file-input>
+
+          <v-select
+            v-if="role === `ROLE_HEADADMIN`"
+            :items="libraries.map(library => ({title: library.city, value: library.id }))"
+            v-model="library"
+            label="Biblioteka"
+            :rules="[v => !!v || 'Wybranie biblioteki jest obowiązkowe']"
+          ></v-select>
 
           <v-card-actions>
           <v-spacer></v-spacer>
