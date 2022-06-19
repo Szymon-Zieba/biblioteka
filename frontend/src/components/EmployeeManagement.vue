@@ -2,7 +2,7 @@
 import AddEmployeePopup from "@/components/AddEmployeePopup.vue";
 import { ref, computed } from "vue";
 import useEmployees from "../composables/useEmployees"
-import {deleteEmployeeById} from "../services/employee.service"
+import {desactiveAccountByUserId} from "../services/employee.service"
 export default {
   components: { AddEmployeePopup },
   setup() {
@@ -22,7 +22,7 @@ export default {
       );
     });
     return {
-      deleteEmployeeById,
+      desactiveAccountByUserId,
       employees,
       showScheduleForm,
       search,
@@ -61,15 +61,22 @@ export default {
           v-for="(employee) in filteredList"
           :key="employee"
         >
-          <td>{{ employee.id }}</td>
-          <td>{{ employee.firstName }}</td>
-          <td>{{ employee.lastName }}</td>
-          <td>{{ employee.phoneNumber }}</td>
-          <td>{{ employee.streetNumber }}</td>
-          <td>{{ employee.zip }}</td>
-          <td>{{ employee.city }}</td>
-          <td>{{ employee.pesel }}</td>
-          <td><v-btn @click="deleteEmployeeById(employee.id)" color="red">Usun</v-btn></td>
+          
+            <td>{{ employee.id }}</td>
+            <td>{{ employee.firstName }}</td>
+            <td>{{ employee.lastName }}</td>
+            <td>{{ employee.phoneNumber }}</td>
+            <td>{{ employee.streetNumber }}</td>
+            <td>{{ employee.zip }}</td>
+            <td>{{ employee.city }}</td>
+            <td>{{ employee.pesel }}</td>
+            
+            <td>
+              <v-btn @click="desactiveAccountByUserId(employee.id,false)" color="red" v-if="employee.enabled">DEZAKTYWUJ KONTO</v-btn>
+              <span v-if="employee.enabled==false">KONTO DEZAKTYWOWANE</span>
+            </td>
+          
+          
         </tr>
       </tbody>
     </v-table>

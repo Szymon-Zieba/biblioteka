@@ -51,4 +51,11 @@ public class UserService implements UserDetailsService {
         user.setRole(roleRepository.findRoleByName(user.getRole().getName()));
         return userRepository.save(user);
     };
+
+    public User setEnableAccount(User user, boolean status){
+        user.setEnabled(status);
+        userRepository.save(user);
+        return user;
+    }
+
 }

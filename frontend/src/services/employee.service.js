@@ -32,7 +32,9 @@ const addEmployee = async (user) => {
     pesel: user.pesel,
   });
 };
-const deleteEmployeeById = async (id) => {
-  await axios.delete(`${API_URL}/employee/${id}`);
+
+const desactiveAccountByUserId = async (id,status) => {
+  await axios.put(`${API_URL}/user/${id}/enable?status=${status}`)   
 };
-export { getEmployees, getEmployeeById, addEmployee, deleteEmployeeById };
+
+export { getEmployees, getEmployeeById, addEmployee, desactiveAccountByUserId };
