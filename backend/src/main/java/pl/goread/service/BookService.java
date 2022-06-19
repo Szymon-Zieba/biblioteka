@@ -12,6 +12,7 @@ import pl.goread.repository.AuthorRepository;
 import pl.goread.repository.BookRepository;
 import pl.goread.repository.CategoryRepository;
 import pl.goread.repository.PublishmentHouseRepository;
+import pl.goread.repository.LibraryRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
@@ -29,6 +30,7 @@ public class BookService {
     private final PublishmentHouseRepository publishmentHouseRepository;
     private final CategoryRepository categoryRepository;
 
+    private final LibraryRepository libraryRepository;
     public List<Book> getBooksByTitle(String title){
         return bookRepository.findBooksByTitle(title);
     }
@@ -79,6 +81,8 @@ public class BookService {
             categoryRepository.save(book.getCategory());
         }
         book.setCategory(categoryRepository.findByName(book.getCategory().getName()));
+
+        book.setLibrary(libraryRepository.findById(book.getLibrary().getId()).orElseThrow());
 
         return bookRepository.save(book);
     }

@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import AuthService from "@/services/auth.service";
+import { getLibrariesUser } from "../services/library.service"
 
 const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
@@ -13,8 +14,12 @@ export const useAuth = defineStore("auth", {
   actions: {
     async login(user) {
       return AuthService.login(user).then(
-        (user) => {
+        async (user) => {
+
+          await this.getUserLibraries(user);
+
           this.loginSuccess(user);
+          
           return Promise.resolve(user);
         },
         (error) => {
@@ -58,5 +63,10 @@ export const useAuth = defineStore("auth", {
     registerFailure() {
       this.status.loggedIn = false;
     },
+    async getUserLibraries(user){
+      const library = await getLibrariesUser(user.id)
+      user.libraryId = library.id 
+      localStorage.setItem("user", JSON.stringify(user))
+    }
   },
 });
