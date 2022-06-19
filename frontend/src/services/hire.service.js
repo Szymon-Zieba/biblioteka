@@ -36,7 +36,12 @@ const getHiresByLibraryId = async (id) => {
   return hires;
 };
 
+const updateHire = async (id, status) => {
+  await axios.patch(`${API_URL}/hire/${id}?status=${status}`);
+};
+
 export {
+  updateHire,
   getHireById,
   addHire,
   getHiresByUserId,

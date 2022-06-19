@@ -50,6 +50,11 @@ public class UserController {
         return userService.updateUser(userService.getUserById(id), updatedUser);
     }
 
+    @PutMapping("/user/{id}/enable")
+    public User setEnableAccount(@PathVariable Long id, @RequestParam boolean status) {
+        return userService.setEnableAccount(userService.getUserById(id),status);
+    }
+
     @DeleteMapping("/user/{id}")
     public void deleteUser(@PathVariable Long id) {
         userRepository.delete(userService.getUserById(id));

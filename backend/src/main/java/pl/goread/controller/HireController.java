@@ -34,5 +34,10 @@ public class HireController {
         return hireService.getHiresByLibraryId(id);
     }
 
+    @PatchMapping("/hire/{id}")
+    public void updateHire(@PathVariable Long id,@RequestParam String status) {
+        hireService.updateHire(id, status);
+    }
+
 
 }

@@ -1,5 +1,8 @@
 <script>
 import useHires from "../composables/useHires"
+import {updateHire} from "../services/hire.service"
+import {updateBook} from "../services/book.service"
+
 import {ref} from 'vue'
 export default {
     setup(){
@@ -7,9 +10,26 @@ export default {
     const {hiresByPesel, loadHiresByPesel} = useHires()
 
     const search = ref("")
+
+    const cancelHire = (hireId, bookId) =>{
+      updateHire(hireId, 'CANCELED')
+      updateBook(bookId, "IN_STOCK")
+    }
+
+    const acceptHire = (hireId, bookId) =>{
+      updateHire(hireId, 'HIRED')
+      updateBook(bookId, "HIRED")
+    }
         
+    const finishHire = (hireId, bookId) =>{
+      updateHire(hireId, 'RETURNED')
+      updateBook(bookId, "IN_STOCK")
+    }
     console.log(hiresByPesel.value)
     return{
+      cancelHire,
+      acceptHire,
+      finishHire,
         hiresByPesel,
         search,
         loadHiresByPesel,
@@ -61,10 +81,14 @@ export default {
           <td>{{hire.book.id}}</td>
           <td style="font-weight: bold;">{{hire.status}}</td>
 
-  
-          <td> <v-btn>Usun</v-btn>
-                <v-btn style="margin-left: 20px;">Wypoż</v-btn>
+          
+          <td v-if="hire.status=='RESERVED'"> <v-btn @click="cancelHire(hire.id, hire.book.id)">Odrzuć</v-btn>
+                <v-btn @click="acceptHire(hire.id, hire.book.id)" style="margin-left: 20px;">Wypożycz</v-btn>
           </td>
+          <td v-if="hire.status=='HIRED' || hire.status=='DELAYED'"> <v-btn @click="finishHire(hire.id, hire.book.id)">Zwróć</v-btn>
+
+          </td>
+
         </tr>
         
       </tbody>
