@@ -19,7 +19,7 @@ public class GiveBackController {
 
     @GetMapping("/giveback/{id}")
     public GiveBack getGiveBackById(@PathVariable Long id) {
-        return giveBackRepository.getById(id);
+        return giveBackRepository.findById(id).orElseThrow();
     }
 
     @GetMapping("/givebacks/user/{id}")
@@ -29,6 +29,7 @@ public class GiveBackController {
 
     @PostMapping("/giveback")
     public GiveBack addGiveBack(@RequestBody GiveBack giveBack) {
+
         return giveBackService.addGiveBack(giveBack);
     }
 
