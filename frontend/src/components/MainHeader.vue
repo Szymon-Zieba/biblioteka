@@ -62,7 +62,9 @@ export default {
         >PANEL ZARZĄDZANIA</v-btn
       >
       <v-btn to="/books" tile elevation="0" color="transparent">OFERTA</v-btn>
-      <v-btn to="contact" tile elevation="0" color="transparent">KONTAKT</v-btn>
+      <v-btn to="/contact" tile elevation="0" color="transparent"
+        >KONTAKT</v-btn
+      >
       <v-btn v-if="!loggedIn" to="/login" elevation="0" color="transparent">
         LOGOWANIE
       </v-btn>

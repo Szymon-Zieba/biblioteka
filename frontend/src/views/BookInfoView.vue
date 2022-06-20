@@ -8,9 +8,13 @@ import { useAuth } from "../store/auth";
 export default {
   components: { MainHeader, MainFooter, ReservationPopup },
   setup() {
+    const auth = useAuth();
 
-     const auth = useAuth();
-     const id = auth.user.id;
+    let id;
+
+    if (auth.status.loggedIn) {
+      id = auth.user.id;
+    }
 
     const route = useRoute();
     const { book, loadBookById } = useBooks();
@@ -38,6 +42,7 @@ export default {
       selected,
       isAvible,
       showScheduleForm,
+      auth,
     };
   },
 };
@@ -55,12 +60,12 @@ export default {
       <div class="book-genre">{{ book.category.name }}</div>
       <div class="book-description">{{ book.description }}</div>
       <div class="book-localization">Lokalizacja : {{ book.library.city }}</div>
-      <div class="book-reservation">
+      <div v-if="auth.status.loggedIn" class="book-reservation">
         <ReservationPopup
           v-model="showScheduleForm"
           :bookId="book.id"
           :libraryId="book.library.id"
-          :userId="id"   
+          :userId="id"
         ></ReservationPopup>
       </div>
     </div>
