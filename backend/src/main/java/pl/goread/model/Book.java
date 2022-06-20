@@ -19,7 +19,7 @@ public class Book {
 
     private String title;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Author> author=new HashSet<>();
 
     private String publishmentYear;

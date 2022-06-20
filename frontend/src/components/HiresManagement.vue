@@ -2,10 +2,16 @@
 import useHires from "../composables/useHires"
 import {updateHire} from "../services/hire.service"
 import {updateBook} from "../services/book.service"
-
+import {addGiveBack} from "../services/giveback.service.js"
+import moment from "moment"
 import {ref} from 'vue'
+import { useAuth } from "../store/auth";
+
 export default {
     setup(){
+
+    const auth = useAuth();
+    const user = auth.user;
 
     const {hiresByPesel, loadHiresByPesel} = useHires()
 
@@ -21,10 +27,18 @@ export default {
       updateBook(bookId, "HIRED")
     }
         
-    const finishHire = (hireId, bookId) =>{
+    const finishHire = (hireId, bookId, hire) =>{
       updateHire(hireId, 'RETURNED')
       updateBook(bookId, "IN_STOCK")
+
+      addGiveBack({
+        hire: hire,
+        employee: user,
+        returnDate: moment().format("YYYY-MM-DDTHH:mm:ss"),
+      });
     }
+
+
     console.log(hiresByPesel.value)
     return{
       cancelHire,
@@ -85,7 +99,7 @@ export default {
           <td v-if="hire.status=='RESERVED'"> <v-btn @click="cancelHire(hire.id, hire.book.id)">Odrzuć</v-btn>
                 <v-btn @click="acceptHire(hire.id, hire.book.id)" style="margin-left: 20px;">Wypożycz</v-btn>
           </td>
-          <td v-if="hire.status=='HIRED' || hire.status=='DELAYED'"> <v-btn @click="finishHire(hire.id, hire.book.id)">Zwróć</v-btn>
+          <td v-if="hire.status=='HIRED' || hire.status=='DELAYED'"> <v-btn @click="finishHire(hire.id, hire.book.id, hire)">Zwróć</v-btn>
 
           </td>
 
