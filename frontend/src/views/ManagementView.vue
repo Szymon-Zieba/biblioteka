@@ -5,6 +5,7 @@ import { computed } from "@vue/runtime-core";
 import { ref } from "vue";
 import AboutClients from "@/components/AboutClients.vue";
 import BookDemandManagement from "@/components/BookDemandManagement.vue";
+import AdminBookManagement from "@/components/AdminBookManagement.vue"; 
 import EmployeeManagement from "@/components/EmployeeManagement.vue";
 import LibraryManagment from '@/components/LibraryManagment.vue';
 
@@ -14,6 +15,7 @@ export default {
     EmployeeMenu,
     AboutClients,
     BookDemandManagement,
+    AdminBookManagement,
     EmployeeManagement,
     LibraryManagment,
   },
@@ -62,6 +64,11 @@ export default {
     <BookDemandManagement
       :role="user.role"
       v-if="selected === `demands`"
+      style="position: relative"
+    />
+    <AdminBookManagement
+      :role="user.role"
+      v-if="selected === `books`"
       style="position: relative"
     />
     <EmployeeManagement
