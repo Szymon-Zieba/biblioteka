@@ -44,6 +44,7 @@ export default {
           <th class="text-left">Nazwisko</th>
           <th class="text-left">Email</th>
           <th class="text-left">Pesel</th>
+          <th class="text-left">Zaawansowane opcje</th>
         </tr>
       </thead>
       <tbody>
@@ -57,6 +58,9 @@ export default {
           <td>{{ client.lastName }}</td>
           <td>{{ client.email }}</td>
           <td>{{ client.pesel }}</td>
+          <td>
+            <v-btn :to="`/client/${client.id}`">Szczegóły</v-btn>
+          </td>
         </tr>
       </tbody>
     </v-table>
