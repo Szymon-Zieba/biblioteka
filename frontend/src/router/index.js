@@ -7,6 +7,7 @@ import BookView from "../views/BookView.vue";
 import BookInfoView from "../views/BookInfoView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import ContactFormView from "../views/ContactFormView";
+import AboutClientView from "../views/AboutClient.vue";
 
 const routes = [
   {
@@ -54,6 +55,12 @@ const routes = [
     path: "/contact",
     name: "contact",
     component: ContactFormView,
+    meta: { requiresAuth: false },
+  },
+  {
+    path: '/client/:id',
+    name: 'client',
+    component: AboutClientView,
     meta: { requiresAuth: false },
   },
 ];
