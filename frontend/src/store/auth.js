@@ -65,7 +65,7 @@ export const useAuth = defineStore("auth", {
     },
     async getUserLibraries(user){
       const library = await getLibrariesUser(user.id)
-      user.libraryId = library.id 
+      user.libraryId = library?.id 
       localStorage.setItem("user", JSON.stringify(user))
     }
   },

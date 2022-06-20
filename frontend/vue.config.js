@@ -7,7 +7,7 @@ module.exports = defineConfig({
   },
 
   transpileDependencies: true,
-  publicPath: "/",
+  publicPath: "./",
 
   pluginOptions: {
     vuetify: {
