@@ -1,14 +1,27 @@
 <script>
+import { ref } from "vue";
+import MainHeader from "@/components/MainHeader.vue";
+import MainFooter from "@/components/MainFooter.vue";
 import useHires from '../composables/useHires.js';
 import useGiveBacks from '../composables/useGiveBacks.js';
+import useUser from "@/composables/useUser";
+import { useRoute } from "vue-router";
 
 export default {
+  components: { MainHeader, MainFooter },
   setup() {
-    const {hires, loadHires} = useHires();
-    loadHires();
+    const route = useRoute();
+    const id = route.params.id;
 
-    const {giveBacks, loadGiveBacks} = useGiveBacks();
-    loadGiveBacks();
+
+    const {hires, loadHiresByUserId} = useHires(id);
+    loadHiresByUserId();
+
+    const {giveBacks, loadGiveBacksByUserId} = useGiveBacks(id);
+    loadGiveBacksByUserId();
+
+    const { user, loadUser } = useUser(id);
+    loadUser();
 
     const isOverDate=(d1)=>{
       const today = new Date();
@@ -17,22 +30,52 @@ export default {
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
       return diffDays;
     }
-    
-    return { 
+
+    return {
+      tab: ref(null),
       hires,
       giveBacks,
       isOverDate,
-    }
+      user,
+    };
   },
 };
 </script>
 
 <template>
-  
-    <v-container class="text-center">
-      
-        <div class="text-subtitle-2 mb-2">Twoje wypożyczone książki</div>
-        <v-expansion-panels v-if="hires" style="margin: auto; max-width: 1000px !important;">
+  <MainHeader style="background: #795548"/>
+  <v-container style="padding-top: 6rem">
+    
+    <v-tabs v-model="tab">
+      <v-tab value="details">Dane osobowe</v-tab>
+      <v-tab value="loans">Wypożyczenia książek</v-tab>
+    </v-tabs>
+    <v-window v-model="tab" justify="center" align="center">
+      <!-- DANE OSOBOWE -->
+      <v-window-item value="details">
+        <div v-if="!user"></div>
+        <div v-else class="details"> <br>
+          <div>
+          ID użytkownika: {{user.id}}
+          <br>
+          Imię: {{user.firstName}}
+          <br>
+          Nazwisko: {{user.lastName}}
+          <br>
+          Email: {{user.email}}
+          <br>
+          Numer telefonu: {{user.phoneNumber}}
+          <br>
+          Numer PESEL: {{user.pesel}}
+          <br>
+          </div>
+        </div>
+      </v-window-item> 
+
+      <!-- WYPOŻYCZENIA UŻYTKOWNIKA -->
+      <v-window-item value="loans">
+        <div> <br>
+           <v-expansion-panels v-if="hires" style="margin: auto; max-width: 1000px !important;">
             <v-expansion-panel v-for="hire in hires" :key="hire.id">
                 <v-expansion-panel-title disable-icon-rotate>
                 (id: {{hire.id}}) {{hire.book.title}}
@@ -73,15 +116,15 @@ export default {
                     Wydawnictwo książki: {{hire.book.publishmentHouse.name}}
                     <br> <br>
                     <div v-if="hire.status=='RESERVED'">
+                      Książkę zarezerwowano {{hire.hireDate.split("T")[0]}}
+                    </div> 
+                    <div v-else>
                       <div v-if="hire.status!='CANCELED'">
                         Książkę wypożyczono {{hire.hireDate.split("T")[0]}}
                       </div>
                       <div v-else>
                         Książkę zarezerowano dnia {{hire.hireDate.split("T")[0]}}, ale rezerwacja została odrzucona przez pracownika.
                       </div>
-                    </div> 
-                    <div v-else>
-                      Książkę wypożyczono {{hire.hireDate.split("T")[0]}}
                     </div> 
                     <br>
                     
@@ -102,10 +145,28 @@ export default {
                 </v-expansion-panel-text>
             </v-expansion-panel>
         </v-expansion-panels>
-    </v-container>
+        </div>
+      </v-window-item>
+    </v-window>
+   
+  </v-container>
+   <MainFooter />
 </template>
 
 <style scoped>
+.save-button {
+  background-color: rgb(23, 201, 100);
+}
+
+.cancel-button {
+  background-color: rgb(210, 210, 210);
+}
+
+.details {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
 .ended {
   color: rgb(0, 100, 0);
 }
@@ -115,8 +176,5 @@ export default {
 .after_deadline {
   color: red;
   font-weight: 900;
-}
-.reserved {
-  color: rgb(51, 102, 255);
 }
 </style>
