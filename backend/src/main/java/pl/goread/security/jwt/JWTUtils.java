@@ -23,6 +23,13 @@ public class JWTUtils {
     @Value("${jwt.expiration}")
     private long JWT_EXPIRATION;
 
+    /**
+     * We are creating a JWT token with the username as the subject, the current date as the issued date, and the current
+     * date plus the expiration time as the expiration date. We are also signing the token with the secret key
+     *
+     * @param authentication This is the authentication object that contains the user's credentials.
+     * @return A JWT token
+     */
     public String generateToken(Authentication authentication){
         User userPrincipal = (User) authentication.getPrincipal();
 
@@ -34,6 +41,12 @@ public class JWTUtils {
                 .compact();
     }
 
+    /**
+     * If the Authorization header starts with "Bearer ", return the token
+     *
+     * @param request The request object that contains the token.
+     * @return The token
+     */
     public String parseToken(HttpServletRequest request){
         String header = request.getHeader("Authorization");
 
@@ -44,10 +57,22 @@ public class JWTUtils {
         return null;
     }
 
+    /**
+     * It takes a token, and returns the username that was used to create the token
+     *
+     * @param token The token that we want to validate.
+     * @return The username of the user who is logged in.
+     */
     public String getUsernameFromToken(String token){
         return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getSubject();
     }
 
+    /**
+     * If the token is valid, return true, otherwise return false
+     *
+     * @param token The JWT token to validate
+     * @return A boolean value.
+     */
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token);
