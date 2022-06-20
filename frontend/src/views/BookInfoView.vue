@@ -47,7 +47,7 @@ export default {
   <MainHeader style="background: #795548" />
 
   <div v-if="book" class="container">
-    <img :src="`/${book.imgUrl}`" class="book-img" />
+    <img :src="`${book.imgUrl}`" class="book-img" />
 
     <div class="book-details">
       <div class="book-title">{{ book.title }}</div>

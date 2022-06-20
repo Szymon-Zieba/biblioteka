@@ -1,4 +1,4 @@
-package pl.goread;
+package pl.goread.controller;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -12,6 +12,7 @@ import pl.goread.controller.BookController;
 import pl.goread.model.*;
 import pl.goread.model.enums.DemandBookStatus;
 import pl.goread.repository.BookRepository;
+import pl.goread.security.jwt.JWTUtils;
 import pl.goread.service.BookService;
 import pl.goread.service.UserService;
 
@@ -39,6 +40,9 @@ public class BookControllerTests {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private JWTUtils jwtUtils;
 
     @Test
     public void getBooks() throws Exception {
