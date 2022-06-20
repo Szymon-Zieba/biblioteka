@@ -1,8 +1,8 @@
 <script>
 import { ref } from "vue";
-import { updateBook} from "../services/book.service.js";
-import { addHire} from "../services/hire.service.js";
-import moment from "moment"
+import { updateBook } from "../services/book.service.js";
+import { addHire } from "../services/hire.service.js";
+import moment from "moment";
 
 export default {
   props: {
@@ -10,28 +10,21 @@ export default {
     libraryId: Number,
     userId: Number,
   },
-  
+
   setup(props) {
-
-  console.log(props.bookId,props.libraryId,props.userId)
-    
-
     const dialog = ref(false);
     const reserveBook = (bookId, libraryId, userId) => {
       addHire({
-        book: {id:bookId},
-        library: {id:libraryId},
-        user: {id:userId},
+        book: { id: bookId },
+        library: { id: libraryId },
+        user: { id: userId },
         hireDate: moment().format("YYYY-MM-DD HH:mm:ss"),
-        status: "RESERVED"
+        status: "RESERVED",
       });
-      updateBook(props.bookId, "RESERVED")
+      updateBook(props.bookId, "RESERVED");
 
       dialog.value = false;
     };
- 
-
-    
 
     return {
       dialog,
@@ -60,7 +53,11 @@ export default {
         >
         <v-card-actions class="mt-16">
           <v-spacer></v-spacer>
-          <v-btn color="orange" text @click="reserveBook(bookId,libraryId,userId)">
+          <v-btn
+            color="orange"
+            text
+            @click="reserveBook(bookId, libraryId, userId)"
+          >
             Rezerwuj
           </v-btn>
           <v-btn color="orange" text @click="dialog = false">

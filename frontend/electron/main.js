@@ -26,7 +26,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  var mysqlPath = "../mysql/bin/mysqld.exe";
+  var mysqlPath = app.getAppPath() + "\\electron\\mariadb\\bin\\mysqld.exe";
   mySQLChild = require("child_process").execFile(mysqlPath);
 
   var jarPath = app.getAppPath() + "\\electron\\GoRead-0.0.1-SNAPSHOT.jar";
@@ -44,9 +44,11 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     console.log(child.pid, mySQLChild.pid);
-    app.quit();
+
     var kill = require("tree-kill");
     kill(child.pid);
     kill(mySQLChild.pid);
+    app.quit();
+    
   }
 });

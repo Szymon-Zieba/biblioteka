@@ -1,11 +1,14 @@
 <script>
 import { ref } from "vue";
 import { useAuth } from "../store/auth";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const showPassword = ref(false);
 
     const auth = useAuth();
+
+    const router = useRouter();
 
     const user = ref({
       email: "",
@@ -20,12 +23,13 @@ export default {
         if (response.message) {
           errorMessage.value = response.message;
         } else {
-          location.href = "http://localhost:8080";
+          router.push({ name: "home" });
         }
       });
     }
 
     return {
+      router,
       showPassword,
       auth,
       user,
@@ -39,8 +43,9 @@ export default {
 <template>
   <div class="container">
     <v-img
+      @click="router.push({ name: 'home' })"
       class="ma-16"
-      style="opacity: 75%"
+      style="opacity: 75%; cursor: pointer"
       src="@/assets/img/logo-library.png"
     ></v-img>
     <div class="loginBox">

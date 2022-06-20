@@ -1,12 +1,16 @@
 <script>
 import { ref } from "vue";
 import { useAuth } from "../store/auth";
+import { useRouter } from "vue-router";
+
 export default {
   name: "MainHeader",
   setup() {
     const auth = useAuth();
     const loggedIn = ref(auth.status.loggedIn);
     const user = ref(auth.user);
+
+    const router = useRouter();
 
     const isEntitledFunction = () => {
       if (user.value) {
@@ -24,7 +28,7 @@ export default {
 
     function logout() {
       auth.logout();
-      location.href = "http://localhost:8080";
+      router.push({ name: "home" });
     }
 
     return {

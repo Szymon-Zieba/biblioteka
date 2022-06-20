@@ -3,6 +3,8 @@ import { ref } from "vue";
 import { useAuth } from "../store/auth";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
+import { useRouter } from "vue-router";
+
 export default {
   setup() {
     const showPassword = ref(false);
@@ -13,6 +15,8 @@ export default {
       email: "",
       password: "",
     });
+
+    const router = useRouter();
 
     const snackbar = ref(false);
     const snackbarText = ref("");
@@ -73,6 +77,7 @@ export default {
     const { value: email, errorMessage: emailError } = useField("email");
 
     return {
+      router,
       showPassword,
       user,
       password,
@@ -92,8 +97,9 @@ export default {
 <template>
   <div class="container">
     <v-img
+      @click="router.push({ name: 'home' })"
       class="ma-16"
-      style="opacity: 75%"
+      style="opacity: 75%; cursor: pointer"
       src="@/assets/img/logo-library.png"
     ></v-img>
     <div class="registerBox">

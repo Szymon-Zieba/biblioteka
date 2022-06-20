@@ -1,5 +1,6 @@
 <script>
 import { useAuth } from "../store/auth";
+import { useRouter } from "vue-router";
 export default {
   props: ["width"],
   emits: ["select-content"],
@@ -7,13 +8,15 @@ export default {
   setup(props, context) {
     const auth = useAuth();
 
+    const router = useRouter();
+
     const emitToParent = () => {
       context.emit("select-content");
     };
 
     function logout() {
       auth.logout();
-      location.href = "http://localhost:8080";
+      router.push({ name: "home" });
     }
 
     return {
