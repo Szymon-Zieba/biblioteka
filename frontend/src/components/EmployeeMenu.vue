@@ -65,7 +65,11 @@ export default {
             title="Pracownicy"
             @click="$emit('select-content', 'employees')"
           ></v-list-item>
-          <v-list-item prepend-icon="mdi-basket" title="Wypożyczenia">
+          <v-list-item
+            prepend-icon="mdi-basket"
+            title="Wypożyczenia"
+            @click="$emit('select-content', 'hires')"
+          >
           </v-list-item>
           <v-list-item
             prepend-icon="mdi-book-search"
