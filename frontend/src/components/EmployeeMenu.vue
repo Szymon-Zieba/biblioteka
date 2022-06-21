@@ -1,15 +1,28 @@
 <script>
+import { useAuth } from "../store/auth";
+import { useRouter } from "vue-router";
+
 export default {
   name: "EmployeeMenu",
   props: ["role"],
 
   setup(props, context) {
+    const auth = useAuth();
+
+    const router = useRouter();
+
+    function logout() {
+      auth.logout();
+      router.push({ name: "home" });
+    }
+
     const emitToParent = () => {
       context.emit("select-content");
     };
 
     console.log(props.role);
     return {
+      logout,
       emitToParent,
       props,
     };
@@ -53,7 +66,11 @@ export default {
         </v-list>
 
         <!-- Menu admina -->
-        <v-list v-if="props.role === `ROLE_ADMIN`" nav style="background: inherit">
+        <v-list
+          v-if="props.role === `ROLE_ADMIN`"
+          nav
+          style="background: inherit"
+        >
           <v-list-item
             prepend-icon="mdi-account-group"
             title="Klienci"
@@ -117,7 +134,7 @@ export default {
 
         <template v-slot:append>
           <div class="pa-2">
-            <v-btn to="/" block color="brown"> Wyloguj </v-btn>
+            <v-btn @click="logout()" block color="brown"> Wyloguj </v-btn>
           </div>
         </template>
       </v-navigation-drawer>

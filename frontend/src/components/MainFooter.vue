@@ -12,8 +12,8 @@ export default {
     <v-row class="footer-content">
       <v-col>
         <span class="font-weight-bold">Kontakt</span>
-        <br />+48 123 123 123 <br />biblioteka@gmail.com <br />FAX: (22)
-        999-00-11
+        <br />+48 644 322 123 <br />biblioteka@gmail.com <br />
+        Rzeszów ul.Piłsudzkiego 13
       </v-col>
 
       <v-col>

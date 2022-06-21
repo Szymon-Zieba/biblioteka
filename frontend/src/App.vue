@@ -1,16 +1,10 @@
 <script>
-
-export default {
-
-}
-
+export default {};
 </script>
 
 <template>
-  <router-view/>
+  <router-view />
+  <!-- <EmployeeMenu role="headAdmin" /> -->
 </template>
 
-<style>
-
-
-</style>
+<style></style>
