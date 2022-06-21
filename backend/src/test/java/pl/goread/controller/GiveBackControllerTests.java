@@ -43,77 +43,77 @@ public class GiveBackControllerTests {
         GiveBack giveBack = new GiveBack();
 
         giveBack.setId(1L);
-            LocalDateTime dataTime = LocalDateTime.of(2000, 10, 1, 2, 32);
+        LocalDateTime dataTime = LocalDateTime.of(2000, 10, 1, 2, 32);
         giveBack.setReturnDate(dataTime);
 
-            Hire hire = new Hire();
-            hire.setId(1L);
-                DemandBookStatus demandBookStatus = DemandBookStatus.HIRED;
-            hire.setStatus(demandBookStatus);
+        Hire hire = new Hire();
+        hire.setId(1L);
+        DemandBookStatus demandBookStatus = DemandBookStatus.HIRED;
+        hire.setStatus(demandBookStatus);
 
-            LocalDateTime dataTime12 = LocalDateTime.of(2000, 10, 1, 2, 32);
-            hire.setHireDate(dataTime12);
+        LocalDateTime dataTime12 = LocalDateTime.of(2000, 10, 1, 2, 32);
+        hire.setHireDate(dataTime12);
 
-                Author author = new Author();
-                author.setId((long)1);
-                author.setName("Imie");
-                author.setLastName("Nazwisko");
+        Author author = new Author();
+        author.setId((long)1);
+        author.setName("Imie");
+        author.setLastName("Nazwisko");
 
-                Author author2 = new Author();
-                author2.setId((long)1);
-                author2.setName("Imie2");
-                author2.setLastName("Nazwisko2");
-                Set<Author> authorList = new HashSet<>();
-                authorList.add(author);
-                authorList.add(author2);
+        Author author2 = new Author();
+        author2.setId((long)1);
+        author2.setName("Imie2");
+        author2.setLastName("Nazwisko2");
+        Set<Author> authorList = new HashSet<>();
+        authorList.add(author);
+        authorList.add(author2);
 
-                PublishmentHouse publishmentHouse = new PublishmentHouse();
-                publishmentHouse.setId((long)1);
-                publishmentHouse.setName("Wydawnictwo");
+        PublishmentHouse publishmentHouse = new PublishmentHouse();
+        publishmentHouse.setId((long)1);
+        publishmentHouse.setName("Wydawnictwo");
 
-                Category category = new Category();
-                category.setId((long)1);
-                category.setName("Kategoria");
+        Category category = new Category();
+        category.setId((long)1);
+        category.setName("Kategoria");
 
-                DemandBookStatus demandBookStatus12 = DemandBookStatus.IN_STOCK;
+        DemandBookStatus demandBookStatus12 = DemandBookStatus.IN_STOCK;
 
-                Library library = new Library();
-                library.setId((long)1);
-                library.setCity("Miasto");
-                library.setPostCode("30-300");
-                library.setEmail("Email");
-                library.setPhoneNumber("Email");
-                library.setStreetAndNumber("ulica i numer 13");
-            hire.setLibrary(library);
+        Library library = new Library();
+        library.setId((long)1);
+        library.setCity("Miasto");
+        library.setPostCode("30-300");
+        library.setEmail("Email");
+        library.setPhoneNumber("Email");
+        library.setStreetAndNumber("ulica i numer 13");
+        hire.setLibrary(library);
 
-            Book book = new Book();
-            book.setId((long)1);
-            book.setTitle("Tytuł");
-            book.setAuthor(authorList);
-            book.setPublishmentYear("2000");
-            book.setPublishmentHouse(publishmentHouse);
-            book.setCategory(category);
-            book.setDescription("dsadsaasdsajkdhawkjfgqweifbewigfbewrohvbaerwiouvhrbsdjpikughfpseao;finhbseiughbwaesgovarheupbsrvou");
-            book.setImgUrl("URL/RUD/SDAD");
-            book.setStatus(demandBookStatus12);
-            book.setLibrary(library);
-            hire.setBook(book);
+        Book book = new Book();
+        book.setId((long)1);
+        book.setTitle("Tytuł");
+        book.setAuthor(authorList);
+        book.setPublishmentYear("2000");
+        book.setPublishmentHouse(publishmentHouse);
+        book.setCategory(category);
+        book.setDescription("dsadsaasdsajkdhawkjfgqweifbewigfbewrohvbaerwiouvhrbsdjpikughfpseao;finhbseiughbwaesgovarheupbsrvou");
+        book.setImgUrl("URL/RUD/SDAD");
+        book.setStatus(demandBookStatus12);
+        book.setLibrary(library);
+        hire.setBook(book);
 
-            Role role = new Role();
-            role.setName("ROLE_EMPLOYEE");
+        Role role = new Role();
+        role.setName("ROLE_EMPLOYEE");
 
-            User user = new User();
-            user.setRole(role);
-            user.setLastName("Imie");
-            user.setFirstName("Nazwisko");
-            user.setZip("39-120");
-            user.setEmail("email@com.com");
-            user.setPhoneNumber("321312321");
-            user.setPESEL("321312312321");
-            user.setCity("Rzeszow");
-            user.setEnabled(true);
+        User user = new User();
+        user.setRole(role);
+        user.setLastName("Imie");
+        user.setFirstName("Nazwisko");
+        user.setZip("39-120");
+        user.setEmail("email@com.com");
+        user.setPhoneNumber("321312321");
+        user.setPESEL("321312312321");
+        user.setCity("Rzeszow");
+        user.setEnabled(true);
 
-            hire.setUser(user);
+        hire.setUser(user);
         giveBack.setHire(hire);
 
         giveBack.setEmployee(user);
